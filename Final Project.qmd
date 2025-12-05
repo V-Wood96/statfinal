@@ -20,7 +20,7 @@ To determine how factors such as mission type (NTEE major group), organizational
 <br>
 
 ## Queation 2
-####To what extent does geography (state-level location) influence whether a nonprofit is high-revenue?
+#### To what extent does geography (state-level location) influence whether a nonprofit is high-revenue?
 
 Test whether revenue patterns vary significantly by state and whether geography is a meaningful predictor after controlling for other factors.
 

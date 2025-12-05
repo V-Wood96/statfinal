@@ -12,7 +12,6 @@ website:
       - Final Project.qmd
       - references.qmd
       - Final Code.qmd
-      - ABOUT.qmd
 
 format:
   html:

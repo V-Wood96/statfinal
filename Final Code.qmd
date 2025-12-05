@@ -39,9 +39,27 @@ tax.all <- tax.all %>%
 table(floor(tax.all$TAX_PERIOD / 100))
 tax.2024 <- tax.all %>%
   filter(floor(TAX_PERIOD / 100) == 2024)
+
+
+
 ```
 
 ## Research Question One 
+
+```{r}
+tax.2024$GroupStatus <- ifelse(tax.2024$GROUP == 0,
+                               "Standalone", "GroupAffiliated")
+tax.2024$GroupStatus <- factor(tax.2024$GroupStatus)
+
+median_income_2024 <- median(tax.2024$INCOME_AMT, na.rm = TRUE)
+
+tax.2024$HighIncome <- ifelse(tax.2024$INCOME_AMT > median_income_2024,
+                              "High", "Low")
+tax.2024$HighIncome <- factor(tax.2024$HighIncome,
+                              levels = c("Low","High"))
+                              
+```
+
 ## Research Question Two 
 ## Research Question Three 
 ## Research Question Four
