@@ -1,0 +1,50 @@
+---
+title: "DATA"
+editor: visual
+---
+
+
+# About the Data
+
+
+
+##### Internal Revenue Service (IRS) Exempt Organizations Division: Factors and variables that influence revenue and income in specific regions.
+
+## Abstract
+
+## Data Set
+
+| Variables        | Descriptions                              |
+|------------------|-------------------------------------------|
+| EIN              | Employer Identification number            |
+| Name             | Primary name                              |
+| ICO              | In care of Name                           |
+| Street           | Street address                            |
+| City             | City                                      |
+| State            | State                                     |
+| Zip              | Zip Code                                  |
+| Group            | Group Exemption Number                    |
+| Subsection       | Subsection code                           |
+| Affiliation      | Affiliation Code                          |
+| Classification   | Class code                                |
+| Ruling           | Ruling Date                               |
+| Deductibility    | Deductibility code                        |
+| Foundation       | Foundation Code                           |
+| Activity         | Activity Code                             |
+| Organization     | Organization code                         |
+| Status           | EO status code                            |
+| Tax_period       | Tax period                                |
+| Asset_CD         | Asset code                                |
+| Income_cd        | Income code                               |
+| Filing_req_CD    | Filing requirement code                   |
+| Pf_Filing_req_CD | PF filing requirement code                |
+| ACCT_PD          | Accounting period                         |
+| Asset_AMT        | Asset amount                              |
+| Income_AMT       | Income amount                             |
+| Revenue_AMT      | revenue amount                            |
+| NTEE_CD          | National Taxonomy of exempt Entities code |
+| Sort_Name        | Sort name                                 |
+
+
+#### Data Cleaning 
+<br>

@@ -1,0 +1,82 @@
+---
+title: "PROJECT ANALYSIS"
+editor: visual
+---
+
+## Introduction 
+
+
+## Queation 1
+#### Which organizational characteristics most strongly predict whether a nonprofit is high-revenue?
+
+To determine how factors such as mission type (NTEE major group), organizational structure (group-affiliated vs standalone), geography (state), financial attributes (assets, revenue), and fiscal year-end month contribute to predicting whether a nonprofit has income above the median for the year 2024.
+
+
+	•	Logistic Regression
+	•	Decision Trees
+	•	Random Forest
+	•	KNN
+
+<br>
+
+## Queation 2
+####To what extent does geography (state-level location) influence whether a nonprofit is high-revenue?
+
+Test whether revenue patterns vary significantly by state and whether geography is a meaningful predictor after controlling for other factors.
+
+
+	•	Logistic Regression
+	•	Decision Tree
+	•	Random Forest
+	
+<br>
+
+## Queation 3
+#### Does mission type (NTEE major group) significantly influence whether a nonprofit is high-revenue?
+
+Focus on how mission category (Arts, Education, Health, Human Services, Religion, etc.) contributes to financial performance.
+
+
+	•	Logistic Regression
+	•	Tree / Random Forest
+	•	KNN (optional)
+	
+<br>
+
+## Queation 4
+#### Do group-affiliated nonprofits differ from standalone nonprofits in their likelihood of being high-revenue?
+
+Examine whether belonging to a parent organization (group ruling) affects financial capacity
+
+	•	Logistic Regression
+	•	Decision Tree
+	•	Random Forest<br>
+
+## Queation 5
+#### Can a nonprofit’s mission type (NTEE major group) be predicted using its financial indicators and organizational attributes?
+
+Flip the previous questions: instead of predicting income from mission, predict mission from financial structure.
+
+
+	•	Multinomial Logistic Regression
+	•	Random Forest
+	•	KNN
+	
+<br>
+
+## Queation 6
+#### Are organizational characteristics able to predict whether a nonprofit has a high asset-to-revenue ratio?
+
+Look at financial efficiency or stability instead of raw income.
+
+
+Same classification models.
+
+<br>
+
+## Key Findings 
+<br>
+
+## Future Scope 
+<br>
+

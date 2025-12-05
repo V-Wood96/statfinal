@@ -2,15 +2,162 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "statfinal",
+    "title": "GROUP TWO",
     "section": "",
-    "text": "This is a Quarto website.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites.\n\n1 + 1\n\n[1] 2"
+    "text": "Welcome and thanks for taking the time to check out our STATs final. During this project, we investigate financial predictors of U.S. tax-exempt organizations. Below is some additional information about the two members of Group Two. We hope you enjoy reading!\n\n\nAnand Boldbaatar\n\n\n\nAnand Boldbaatar\n\n\nI am Anand Boldbaatar a masters student at George Mason university, majoring In Applied data analytics. My undergrad was in IT (Database and programming)\n\n\nVeronica Wood\n\n\n\nVeronica Wood\n\n\nMy name is Veronica Wood. I earned a B.S. in Business Management from Virginia Commonwealth University (VCU) in 2019, and I’m excited to learn more with a MS in Data Analytics Engineering program.\nI have always been interested by the stories that data can tell and how those insights can drive meaningful improvement. My interest grew further during my role as a Budget Analyst for the Department of Defense, where I provide analysis across multiple financial portfolios.\nI believe that pursuing the MS DAEN degree will provide me with a more well-rounded foundation in data analysis and position me for continued growth in the field."
   },
   {
     "objectID": "about.html",
     "href": "about.html",
-    "title": "About",
+    "title": "ABOUT US",
     "section": "",
-    "text": "About this site\n\n1 + 1\n\n[1] 2"
+    "text": "Anand Boldbaatar\n\n\n\nAnand Boldbaatar\n\n\nI am Anand Boldbaatar a masters student at George Mason university, majoring In Applied data analytics. My undergrad was in IT (Database and programming)\n\n\nVeronica Wood\n\n\n\nVeronica Wood\n\n\nMy name is Veronica Wood. I earned a B.S. in Business Management from Virginia Commonwealth University (VCU) in 2019, and I’m excited to learn more with a MS in Data Analytics Engineering program.\nI have always been interested by the stories that data can tell and how those insights can drive meaningful improvement. My interest grew further during my role as a Budget Analyst for the Department of Defense, where I provide analysis across multiple financial portfolios.\nI believe that pursuing the MS DAEN degree will provide me with a more well-rounded foundation in data analysis and position me for continued growth in the field."
+  },
+  {
+    "objectID": "Final Code.html",
+    "href": "Final Code.html",
+    "title": "FINAL CODE",
+    "section": "",
+    "text": "eo.pr &lt;- read.csv('/Users/veronicawood/School/GM Fall 2025 /STAT 515 - Applied Statistics and Visualization for Analytics/Final project/eo_pr.csv')\neo.xx &lt;- read.csv('/Users/veronicawood/School/GM Fall 2025 /STAT 515 - Applied Statistics and Visualization for Analytics/Final project/eo_xx.csv')\neo1&lt;- read.csv('/Users/veronicawood/School/GM Fall 2025 /STAT 515 - Applied Statistics and Visualization for Analytics/Final project/eo1 (1).csv')\neo2 &lt;- read.csv('/Users/veronicawood/School/GM Fall 2025 /STAT 515 - Applied Statistics and Visualization for Analytics/Final project/eo2.csv')\neo3 &lt;- read.csv('/Users/veronicawood/School/GM Fall 2025 /STAT 515 - Applied Statistics and Visualization for Analytics/Final project/eo3.csv')\neo4 &lt;- read.csv('/Users/veronicawood/School/GM Fall 2025 /STAT 515 - Applied Statistics and Visualization for Analytics/Final project/eo4.csv')\n\nlibrary(dplyr)\n\n\nAttaching package: 'dplyr'\n\n\nThe following objects are masked from 'package:stats':\n\n    filter, lag\n\n\nThe following objects are masked from 'package:base':\n\n    intersect, setdiff, setequal, union\n\nbig_df &lt;- bind_rows(eo.pr, eo.xx, eo1, eo2, eo3, eo4)\n\ntax.all &lt;- big_df %&gt;%\n  filter(!is.na(INCOME_AMT),\n         INCOME_AMT &gt; 0)\n\n\nstates_50 &lt;- state.abb\n\ntax.all &lt;- tax.all %&gt;%\n  filter(STATE %in% states_50)\n\ntax.all$TaxDate &lt;- as.Date(\n  paste0(tax.all$TAX_PERIOD, \"01\"),  \n  format = \"%Y%m%d\")\n\ncutoff &lt;- as.Date(\"2021-01-01\")\n\ntax.all &lt;- tax.all %&gt;%\n  filter(TaxDate &gt;= cutoff)\n\ntable(floor(tax.all$TAX_PERIOD / 100))\n\n\n  2021   2022   2023   2024   2025 \n  2000  12588 163787 449185  39414 \n\ntax.2024 &lt;- tax.all %&gt;%\n  filter(floor(TAX_PERIOD / 100) == 2024)"
+  },
+  {
+    "objectID": "index.html#anand-boldbaatar",
+    "href": "index.html#anand-boldbaatar",
+    "title": "Group Two",
+    "section": "Anand Boldbaatar",
+    "text": "Anand Boldbaatar\n\n\n\nAnand Boldbaatar\n\n\nI am Anand Boldbaatar a masters student at George Mason university, majoring In Applied data analytics. My undergrad was in IT (Database and programming)"
+  },
+  {
+    "objectID": "index.html#veronica-wood",
+    "href": "index.html#veronica-wood",
+    "title": "Group Two",
+    "section": "Veronica Wood",
+    "text": "Veronica Wood\n\n\n\nVeronica Wood\n\n\nMy name is Veronica Wood. I earned a B.S. in Business Management from Virginia Commonwealth University (VCU) in 2019, and I’m excited to learn more with a MS in Data Analytics Engineering program.\nI have always been interested by the stories that data can tell and how those insights can drive meaningful improvement. My interest grew further during my role as a Budget Analyst for the Department of Defense, where I provide analysis across multiple financial portfolios.\nI believe that pursuing the MS DAEN degree will provide me with a more well-rounded foundation in data analysis and position me for continued growth in the field."
+  },
+  {
+    "objectID": "Final Project.html#queation-1",
+    "href": "Final Project.html#queation-1",
+    "title": "PROJECT ANALYSIS",
+    "section": "Queation 1",
+    "text": "Queation 1\n\nWhich organizational characteristics most strongly predict whether a nonprofit is high-revenue?\nTo determine how factors such as mission type (NTEE major group), organizational structure (group-affiliated vs standalone), geography (state), financial attributes (assets, revenue), and fiscal year-end month contribute to predicting whether a nonprofit has income above the median for the year 2024.\n•   Logistic Regression\n•   Decision Trees\n•   Random Forest\n•   KNN"
+  },
+  {
+    "objectID": "Final Project.html#queation-2",
+    "href": "Final Project.html#queation-2",
+    "title": "PROJECT ANALYSIS",
+    "section": "Queation 2",
+    "text": "Queation 2\n####To what extent does geography (state-level location) influence whether a nonprofit is high-revenue?\nTest whether revenue patterns vary significantly by state and whether geography is a meaningful predictor after controlling for other factors.\n•   Logistic Regression\n•   Decision Tree\n•   Random Forest"
+  },
+  {
+    "objectID": "Final Project.html#queation-3",
+    "href": "Final Project.html#queation-3",
+    "title": "PROJECT ANALYSIS",
+    "section": "Queation 3",
+    "text": "Queation 3\n\nDoes mission type (NTEE major group) significantly influence whether a nonprofit is high-revenue?\nFocus on how mission category (Arts, Education, Health, Human Services, Religion, etc.) contributes to financial performance.\n•   Logistic Regression\n•   Tree / Random Forest\n•   KNN (optional)"
+  },
+  {
+    "objectID": "Final Project.html#queation-4",
+    "href": "Final Project.html#queation-4",
+    "title": "PROJECT ANALYSIS",
+    "section": "Queation 4",
+    "text": "Queation 4\n\nDo group-affiliated nonprofits differ from standalone nonprofits in their likelihood of being high-revenue?\nExamine whether belonging to a parent organization (group ruling) affects financial capacity\n•   Logistic Regression\n•   Decision Tree\n•   Random Forest&lt;br&gt;"
+  },
+  {
+    "objectID": "Final Project.html#queation-5",
+    "href": "Final Project.html#queation-5",
+    "title": "PROJECT ANALYSIS",
+    "section": "Queation 5",
+    "text": "Queation 5\n\nCan a nonprofit’s mission type (NTEE major group) be predicted using its financial indicators and organizational attributes?\nFlip the previous questions: instead of predicting income from mission, predict mission from financial structure.\n•   Multinomial Logistic Regression\n•   Random Forest\n•   KNN"
+  },
+  {
+    "objectID": "Final Project.html#future-scope",
+    "href": "Final Project.html#future-scope",
+    "title": "PROJECT ANALYSIS",
+    "section": "Future Scope",
+    "text": "Future Scope"
+  },
+  {
+    "objectID": "Final Project.html#references",
+    "href": "Final Project.html#references",
+    "title": "FINAL PROJECT",
+    "section": "References",
+    "text": "References"
+  },
+  {
+    "objectID": "data.html",
+    "href": "data.html",
+    "title": "DATA",
+    "section": "",
+    "text": "Variables\nDescriptions\n\n\n\n\nEIN\nEmployer Identification number\n\n\nName\nPrimary name\n\n\nICO\nIn care of Name\n\n\nStreet\nStreet address\n\n\nCity\nCity\n\n\nState\nState\n\n\nZip\nZip Code\n\n\nGroup\nGroup Exemption Number\n\n\nSubsection\nSubsection code\n\n\nAffiliation\nAffiliation Code\n\n\nClassification\nClass code\n\n\nRuling\nRuling Date\n\n\nDeductibility\nDeductibility code\n\n\nFoundation\nFoundation Code\n\n\nActivity\nActivity Code\n\n\nOrganization\nOrganization code\n\n\nStatus\nEO status code\n\n\nTax_period\nTax period\n\n\nAsset_CD\nAsset code\n\n\nIncome_cd\nIncome code\n\n\nFiling_req_CD\nFiling requirement code\n\n\nPf_Filing_req_CD\nPF filing requirement code\n\n\nACCT_PD\nAccounting period\n\n\nAsset_AMT\nAsset amount\n\n\nIncome_AMT\nIncome amount\n\n\nRevenue_AMT\nrevenue amount\n\n\nNTEE_CD\nNational Taxonomy of exempt Entities code\n\n\nSort_Name\nSort name"
+  },
+  {
+    "objectID": "Final Project.html#key-findings",
+    "href": "Final Project.html#key-findings",
+    "title": "PROJECT ANALYSIS",
+    "section": "Key Findings",
+    "text": "Key Findings"
+  },
+  {
+    "objectID": "Final Code.html#cleaning-the-data",
+    "href": "Final Code.html#cleaning-the-data",
+    "title": "FINAL CODE",
+    "section": "",
+    "text": "eo.pr &lt;- read.csv('/Users/veronicawood/School/GM Fall 2025 /STAT 515 - Applied Statistics and Visualization for Analytics/Final project/eo_pr.csv')\neo.xx &lt;- read.csv('/Users/veronicawood/School/GM Fall 2025 /STAT 515 - Applied Statistics and Visualization for Analytics/Final project/eo_xx.csv')\neo1&lt;- read.csv('/Users/veronicawood/School/GM Fall 2025 /STAT 515 - Applied Statistics and Visualization for Analytics/Final project/eo1 (1).csv')\neo2 &lt;- read.csv('/Users/veronicawood/School/GM Fall 2025 /STAT 515 - Applied Statistics and Visualization for Analytics/Final project/eo2.csv')\neo3 &lt;- read.csv('/Users/veronicawood/School/GM Fall 2025 /STAT 515 - Applied Statistics and Visualization for Analytics/Final project/eo3.csv')\neo4 &lt;- read.csv('/Users/veronicawood/School/GM Fall 2025 /STAT 515 - Applied Statistics and Visualization for Analytics/Final project/eo4.csv')\n\nlibrary(dplyr)\n\n\nAttaching package: 'dplyr'\n\n\nThe following objects are masked from 'package:stats':\n\n    filter, lag\n\n\nThe following objects are masked from 'package:base':\n\n    intersect, setdiff, setequal, union\n\nbig_df &lt;- bind_rows(eo.pr, eo.xx, eo1, eo2, eo3, eo4)\n\ntax.all &lt;- big_df %&gt;%\n  filter(!is.na(INCOME_AMT),\n         INCOME_AMT &gt; 0)\n\n\nstates_50 &lt;- state.abb\n\ntax.all &lt;- tax.all %&gt;%\n  filter(STATE %in% states_50)\n\ntax.all$TaxDate &lt;- as.Date(\n  paste0(tax.all$TAX_PERIOD, \"01\"),  \n  format = \"%Y%m%d\")\n\ncutoff &lt;- as.Date(\"2021-01-01\")\n\ntax.all &lt;- tax.all %&gt;%\n  filter(TaxDate &gt;= cutoff)\n\ntable(floor(tax.all$TAX_PERIOD / 100))\n\n\n  2021   2022   2023   2024   2025 \n  2000  12588 163787 449185  39414 \n\ntax.2024 &lt;- tax.all %&gt;%\n  filter(floor(TAX_PERIOD / 100) == 2024)"
+  },
+  {
+    "objectID": "Final Code.html#research-question-one",
+    "href": "Final Code.html#research-question-one",
+    "title": "FINAL CODE",
+    "section": "Research Question One",
+    "text": "Research Question One"
+  },
+  {
+    "objectID": "Final Code.html#research-question-two",
+    "href": "Final Code.html#research-question-two",
+    "title": "FINAL CODE",
+    "section": "Research Question Two",
+    "text": "Research Question Two"
+  },
+  {
+    "objectID": "Final Code.html#research-question-three",
+    "href": "Final Code.html#research-question-three",
+    "title": "FINAL CODE",
+    "section": "Research Question Three",
+    "text": "Research Question Three"
+  },
+  {
+    "objectID": "Final Code.html#research-question-four",
+    "href": "Final Code.html#research-question-four",
+    "title": "FINAL CODE",
+    "section": "Research Question Four",
+    "text": "Research Question Four"
+  },
+  {
+    "objectID": "Final Code.html#research-question-five",
+    "href": "Final Code.html#research-question-five",
+    "title": "FINAL CODE",
+    "section": "Research Question Five",
+    "text": "Research Question Five"
+  },
+  {
+    "objectID": "Final Project.html#queation-6",
+    "href": "Final Project.html#queation-6",
+    "title": "PROJECT ANALYSIS",
+    "section": "Queation 6",
+    "text": "Queation 6\n\nAre organizational characteristics able to predict whether a nonprofit has a high asset-to-revenue ratio?\nLook at financial efficiency or stability instead of raw income.\nSame classification models."
+  },
+  {
+    "objectID": "data.html#abstract",
+    "href": "data.html#abstract",
+    "title": "DATA",
+    "section": "Abstract",
+    "text": "Abstract"
+  },
+  {
+    "objectID": "data.html#data-set",
+    "href": "data.html#data-set",
+    "title": "DATA",
+    "section": "",
+    "text": "Variables\nDescriptions\n\n\n\n\nEIN\nEmployer Identification number\n\n\nName\nPrimary name\n\n\nICO\nIn care of Name\n\n\nStreet\nStreet address\n\n\nCity\nCity\n\n\nState\nState\n\n\nZip\nZip Code\n\n\nGroup\nGroup Exemption Number\n\n\nSubsection\nSubsection code\n\n\nAffiliation\nAffiliation Code\n\n\nClassification\nClass code\n\n\nRuling\nRuling Date\n\n\nDeductibility\nDeductibility code\n\n\nFoundation\nFoundation Code\n\n\nActivity\nActivity Code\n\n\nOrganization\nOrganization code\n\n\nStatus\nEO status code\n\n\nTax_period\nTax period\n\n\nAsset_CD\nAsset code\n\n\nIncome_cd\nIncome code\n\n\nFiling_req_CD\nFiling requirement code\n\n\nPf_Filing_req_CD\nPF filing requirement code\n\n\nACCT_PD\nAccounting period\n\n\nAsset_AMT\nAsset amount\n\n\nIncome_AMT\nIncome amount\n\n\nRevenue_AMT\nrevenue amount\n\n\nNTEE_CD\nNational Taxonomy of exempt Entities code\n\n\nSort_Name\nSort name"
   }
 ]

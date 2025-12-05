@@ -1,0 +1,48 @@
+---
+title: "FINAL CODE"
+editor: visual
+---
+
+## Cleaning The Data
+
+```{r}
+eo.pr <- read.csv('/Users/veronicawood/School/GM Fall 2025 /STAT 515 - Applied Statistics and Visualization for Analytics/Final project/eo_pr.csv')
+eo.xx <- read.csv('/Users/veronicawood/School/GM Fall 2025 /STAT 515 - Applied Statistics and Visualization for Analytics/Final project/eo_xx.csv')
+eo1<- read.csv('/Users/veronicawood/School/GM Fall 2025 /STAT 515 - Applied Statistics and Visualization for Analytics/Final project/eo1 (1).csv')
+eo2 <- read.csv('/Users/veronicawood/School/GM Fall 2025 /STAT 515 - Applied Statistics and Visualization for Analytics/Final project/eo2.csv')
+eo3 <- read.csv('/Users/veronicawood/School/GM Fall 2025 /STAT 515 - Applied Statistics and Visualization for Analytics/Final project/eo3.csv')
+eo4 <- read.csv('/Users/veronicawood/School/GM Fall 2025 /STAT 515 - Applied Statistics and Visualization for Analytics/Final project/eo4.csv')
+
+library(dplyr)
+
+big_df <- bind_rows(eo.pr, eo.xx, eo1, eo2, eo3, eo4)
+
+tax.all <- big_df %>%
+  filter(!is.na(INCOME_AMT),
+         INCOME_AMT > 0)
+
+
+states_50 <- state.abb
+
+tax.all <- tax.all %>%
+  filter(STATE %in% states_50)
+
+tax.all$TaxDate <- as.Date(
+  paste0(tax.all$TAX_PERIOD, "01"),  
+  format = "%Y%m%d")
+
+cutoff <- as.Date("2021-01-01")
+
+tax.all <- tax.all %>%
+  filter(TaxDate >= cutoff)
+
+table(floor(tax.all$TAX_PERIOD / 100))
+tax.2024 <- tax.all %>%
+  filter(floor(TAX_PERIOD / 100) == 2024)
+```
+
+## Research Question One 
+## Research Question Two 
+## Research Question Three 
+## Research Question Four
+## Research Question Five

@@ -1,0 +1,18 @@
+/*-- scss:rules --*/
+
+/* Override ONLY the navbar background */
+.navbar {
+  background-color: #9fbad1 !important;
+}
+
+/* Navbar text color */
+.navbar .navbar-nav .nav-link,
+.navbar .navbar-brand {
+  color: #ffffff !important;
+}
+
+.navbar .navbar-nav .nav-link:hover {
+  color: #f0f0f0 !important;
+}
+
+/*-- scss:rules --*/

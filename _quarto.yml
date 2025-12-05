@@ -3,20 +3,21 @@ project:
   output-dir: docs
 
 website:
-  title: "statfinal"
+  title: "Group Two"
   navbar:
-    left:
+    right:
       - href: index.qmd
-        text: Home
-      - about.qmd
+        text: ABOUT US
+      - data.qmd
+      - Final Project.qmd
+      - references.qmd
+      - Final Code.qmd
+      - ABOUT.qmd
 
 format:
   html:
     theme:
-      - cosmo
-      - brand
-    css: styles.css
+      - minty
     toc: true
-
 
 
