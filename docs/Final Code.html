@@ -153,12 +153,18 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#cleaning-the-data" id="toc-cleaning-the-data" class="nav-link active" data-scroll-target="#cleaning-the-data">Cleaning The Data</a></li>
+  <li><a href="#httpswww.irs.govcharities-non-profitsexempt-organizations-business-master-file-extract-eo-bmf" id="toc-httpswww.irs.govcharities-non-profitsexempt-organizations-business-master-file-extract-eo-bmf" class="nav-link active" data-scroll-target="#httpswww.irs.govcharities-non-profitsexempt-organizations-business-master-file-extract-eo-bmf">https://www.irs.gov/charities-non-profits/exempt-organizations-business-master-file-extract-eo-bmf</a>
+  <ul class="collapse">
+  <li><a href="#cleaning-the-data" id="toc-cleaning-the-data" class="nav-link" data-scroll-target="#cleaning-the-data">Cleaning The Data</a></li>
+  </ul></li>
+  <li><a href="#we-first-combind-the-different-region" id="toc-we-first-combind-the-different-region" class="nav-link" data-scroll-target="#we-first-combind-the-different-region">We first combind the different region</a>
+  <ul class="collapse">
   <li><a href="#research-question-one" id="toc-research-question-one" class="nav-link" data-scroll-target="#research-question-one">Research Question One</a></li>
   <li><a href="#research-question-two" id="toc-research-question-two" class="nav-link" data-scroll-target="#research-question-two">Research Question Two</a></li>
   <li><a href="#research-question-three" id="toc-research-question-three" class="nav-link" data-scroll-target="#research-question-three">Research Question Three</a></li>
   <li><a href="#research-question-four" id="toc-research-question-four" class="nav-link" data-scroll-target="#research-question-four">Research Question Four</a></li>
   <li><a href="#research-question-five" id="toc-research-question-five" class="nav-link" data-scroll-target="#research-question-five">Research Question Five</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -184,6 +190,8 @@ window.Quarto = {
 </header>
 
 
+<section id="httpswww.irs.govcharities-non-profitsexempt-organizations-business-master-file-extract-eo-bmf" class="level1">
+<h1>https://www.irs.gov/charities-non-profits/exempt-organizations-business-master-file-extract-eo-bmf</h1>
 <section id="cleaning-the-data" class="level2">
 <h2 class="anchored" data-anchor-id="cleaning-the-data">Cleaning The Data</h2>
 <p>eo.pr &lt;- read.csv(‘/Users/veronicawood/School/GM Fall 2025 /STAT 515 - Applied Statistics and Visualization for Analytics/Final project/eo_pr.csv’)</p>
@@ -193,6 +201,10 @@ window.Quarto = {
 <p>eo3 &lt;- read.csv(‘/Users/veronicawood/School/GM Fall 2025 /STAT 515 - Applied Statistics and Visualization for Analytics/Final project/eo3.csv’)</p>
 <p>eo4 &lt;- read.csv(‘/Users/veronicawood/School/GM Fall 2025 /STAT 515 - Applied Statistics and Visualization for Analytics/Final project/eo4.csv’)</p>
 <p>library(dplyr)</p>
+</section>
+</section>
+<section id="we-first-combind-the-different-region" class="level1">
+<h1>We first combind the different region</h1>
 <p>big_df &lt;- bind_rows(eo.pr, eo.xx, eo1, eo2, eo3, eo4)</p>
 <p>tax.all &lt;- big_df %&gt;% filter(!is.na(INCOME_AMT), INCOME_AMT &gt; 0)</p>
 <p>states_50 &lt;- state.abb</p>
@@ -202,8 +214,8 @@ window.Quarto = {
 format = “%Y%m%d”)</p>
 <p>cutoff &lt;- as.Date(“2021-01-01”)</p>
 <p>tax.all &lt;- tax.all %&gt;% filter(TaxDate &gt;= cutoff)</p>
-<p>table(floor(tax.all$TAX_PERIOD / 100)) tax.2024 &lt;- tax.all %&gt;% filter(floor(TAX_PERIOD / 100) == 2024)</p>
-</section>
+<p>table(floor(tax.all$TAX_PERIOD / 100))</p>
+<p>tax.2024 &lt;- tax.all %&gt;% filter(floor(TAX_PERIOD / 100) == 2024)</p>
 <section id="research-question-one" class="level2">
 <h2 class="anchored" data-anchor-id="research-question-one">Research Question One</h2>
 <p>tax.2024<span class="math inline">\(GroupStatus &lt;- ifelse(tax.2024\)</span>GROUP == 0, “Standalone”, “GroupAffiliated”) tax.2024<span class="math inline">\(GroupStatus &lt;- factor(tax.2024\)</span>GroupStatus)</p>
@@ -223,6 +235,7 @@ format = “%Y%m%d”)</p>
 <h2 class="anchored" data-anchor-id="research-question-five">Research Question Five</h2>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

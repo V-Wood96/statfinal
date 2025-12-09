@@ -84,9 +84,24 @@ Finally, Religion Support organizations displayed a distinctive financial signat
 
 Across all five mission types, Figure 1 highlights clear visual divergence in effect sizes, particularly the extremely small revenue odds ratios for Arts, Youth, and Religion. Figure 2 presents an integrated view of confidence intervals and demonstrates that financial indicators reliably differentiate organizational missions. Together, these findings show that even simple financial metrics capture meaningful structural differences between nonprofit mission types.
 
-![Odds Ratios and 95% Confidence Intervals Across Top NTEE Groupss](ntee_results_table.png){width=200}
-ntee_results_table
-![Odds Ratios for Financial Predictors Across Top NTEE Groups](Odds Ratios for Financial Predictors Across Top NTEE Groups.jpeg){width=200}
+<br>
+
+![Odds Ratios and 95% Confidence Intervals Across Top NTEE Groups](ntee_results_table.png){width=800}
+
+
+
+
+<br>
+
+![Odds Ratios for Financial Predictors Across Top NTEE Groups](Odds Ratios for Financial Predictors Across Top NTEE Groups.jpeg){width=1200}
+
+“How accurately can financial variables predict whether an organization belongs to NTEE Group B (Education), P (Human Services), A (Arts), N (Youth), or X (Religion Support)?”
+
+<br>
+
+![Coeff](NTEE_Logistic_Results.png){width=700}
+
+
 
 ##### Discussion
 
