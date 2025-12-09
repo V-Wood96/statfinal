@@ -36,7 +36,6 @@ Test whether revenue patterns vary significantly by state and whether geography 
 ## Queation 3
 #### Which financial indicators most strongly distinguish between the largest nonprofit mission types?
 
-Can financial indicators (assets, income, revenue, and revenue-to-income ratio) predict nonprofit mission type?
 Which financial indicators best distinguish among the five largest NTEE major groups?
 Do mission groups exhibit consistent financial profiles that align with operational demands and funding models?
 
@@ -112,4 +111,5 @@ Although financial data do not capture the full complexity of nonprofit missions
 
 ## Future Scope 
 <br>
+
 
