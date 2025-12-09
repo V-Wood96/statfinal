@@ -20,41 +20,6 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
@@ -103,6 +68,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -142,10 +136,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li class="nav-item">
     <a class="nav-link active" href="./Final Code.html" aria-current="page"> 
 <span class="menu-text">FINAL CODE</span></a>
-  </li>  
-  <li class="nav-item compact">
-    <a class="nav-link" href="./ABOUT.qmd"> 
-<span class="menu-text"></span></a>
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
@@ -196,62 +186,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="cleaning-the-data" class="level2">
 <h2 class="anchored" data-anchor-id="cleaning-the-data">Cleaning The Data</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>eo.pr <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">'/Users/veronicawood/School/GM Fall 2025 /STAT 515 - Applied Statistics and Visualization for Analytics/Final project/eo_pr.csv'</span>)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>eo.xx <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">'/Users/veronicawood/School/GM Fall 2025 /STAT 515 - Applied Statistics and Visualization for Analytics/Final project/eo_xx.csv'</span>)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>eo1<span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">'/Users/veronicawood/School/GM Fall 2025 /STAT 515 - Applied Statistics and Visualization for Analytics/Final project/eo1 (1).csv'</span>)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>eo2 <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">'/Users/veronicawood/School/GM Fall 2025 /STAT 515 - Applied Statistics and Visualization for Analytics/Final project/eo2.csv'</span>)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>eo3 <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">'/Users/veronicawood/School/GM Fall 2025 /STAT 515 - Applied Statistics and Visualization for Analytics/Final project/eo3.csv'</span>)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>eo4 <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">'/Users/veronicawood/School/GM Fall 2025 /STAT 515 - Applied Statistics and Visualization for Analytics/Final project/eo4.csv'</span>)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>
-Attaching package: 'dplyr'</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>The following objects are masked from 'package:stats':
-
-    filter, lag</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>The following objects are masked from 'package:base':
-
-    intersect, setdiff, setequal, union</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>big_df <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(eo.pr, eo.xx, eo1, eo2, eo3, eo4)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>tax.all <span class="ot">&lt;-</span> big_df <span class="sc">%&gt;%</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(INCOME_AMT),</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>         INCOME_AMT <span class="sc">&gt;</span> <span class="dv">0</span>)</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>states_50 <span class="ot">&lt;-</span> state.abb</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>tax.all <span class="ot">&lt;-</span> tax.all <span class="sc">%&gt;%</span></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(STATE <span class="sc">%in%</span> states_50)</span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>tax.all<span class="sc">$</span>TaxDate <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(</span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">paste0</span>(tax.all<span class="sc">$</span>TAX_PERIOD, <span class="st">"01"</span>),  </span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">format =</span> <span class="st">"%Y%m%d"</span>)</span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>cutoff <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(<span class="st">"2021-01-01"</span>)</span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>tax.all <span class="ot">&lt;-</span> tax.all <span class="sc">%&gt;%</span></span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(TaxDate <span class="sc">&gt;=</span> cutoff)</span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(<span class="fu">floor</span>(tax.all<span class="sc">$</span>TAX_PERIOD <span class="sc">/</span> <span class="dv">100</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-  2021   2022   2023   2024   2025 
-  2000  12588 163787 449185  39414 </code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>tax<span class="fl">.2024</span> <span class="ot">&lt;-</span> tax.all <span class="sc">%&gt;%</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">floor</span>(TAX_PERIOD <span class="sc">/</span> <span class="dv">100</span>) <span class="sc">==</span> <span class="dv">2024</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
+<p>eo.pr &lt;- read.csv(‘/Users/veronicawood/School/GM Fall 2025 /STAT 515 - Applied Statistics and Visualization for Analytics/Final project/eo_pr.csv’)</p>
+<p>eo.xx &lt;- read.csv(‘/Users/veronicawood/School/GM Fall 2025 /STAT 515 - Applied Statistics and Visualization for Analytics/Final project/eo_xx.csv’)</p>
+<p>eo1&lt;- read.csv(‘/Users/veronicawood/School/GM Fall 2025 /STAT 515 - Applied Statistics and Visualization for Analytics/Final project/eo1 (1).csv’)</p>
+<p>eo2 &lt;- read.csv(‘/Users/veronicawood/School/GM Fall 2025 /STAT 515 - Applied Statistics and Visualization for Analytics/Final project/eo2.csv’)</p>
+<p>eo3 &lt;- read.csv(‘/Users/veronicawood/School/GM Fall 2025 /STAT 515 - Applied Statistics and Visualization for Analytics/Final project/eo3.csv’)</p>
+<p>eo4 &lt;- read.csv(‘/Users/veronicawood/School/GM Fall 2025 /STAT 515 - Applied Statistics and Visualization for Analytics/Final project/eo4.csv’)</p>
+<p>library(dplyr)</p>
+<p>big_df &lt;- bind_rows(eo.pr, eo.xx, eo1, eo2, eo3, eo4)</p>
+<p>tax.all &lt;- big_df %&gt;% filter(!is.na(INCOME_AMT), INCOME_AMT &gt; 0)</p>
+<p>states_50 &lt;- state.abb</p>
+<p>tax.all &lt;- tax.all %&gt;% filter(STATE %in% states_50)</p>
+<p>tax.all<span class="math inline">\(TaxDate &lt;- as.Date(
+  paste0(tax.all\)</span>TAX_PERIOD, “01”),<br>
+format = “%Y%m%d”)</p>
+<p>cutoff &lt;- as.Date(“2021-01-01”)</p>
+<p>tax.all &lt;- tax.all %&gt;% filter(TaxDate &gt;= cutoff)</p>
+<p>table(floor(tax.all$TAX_PERIOD / 100)) tax.2024 &lt;- tax.all %&gt;% filter(floor(TAX_PERIOD / 100) == 2024)</p>
 </section>
 <section id="research-question-one" class="level2">
 <h2 class="anchored" data-anchor-id="research-question-one">Research Question One</h2>
+<p>tax.2024<span class="math inline">\(GroupStatus &lt;- ifelse(tax.2024\)</span>GROUP == 0, “Standalone”, “GroupAffiliated”) tax.2024<span class="math inline">\(GroupStatus &lt;- factor(tax.2024\)</span>GroupStatus)</p>
+<p>median_income_2024 &lt;- median(tax.2024$INCOME_AMT, na.rm = TRUE)</p>
+<p>tax.2024<span class="math inline">\(HighIncome &lt;- ifelse(tax.2024\)</span>INCOME_AMT &gt; median_income_2024, “High”, “Low”) tax.2024<span class="math inline">\(HighIncome &lt;- factor(tax.2024\)</span>HighIncome, levels = c(“Low”,“High”))</p>
 </section>
 <section id="research-question-two" class="level2">
 <h2 class="anchored" data-anchor-id="research-question-two">Research Question Two</h2>

@@ -3,6 +3,8 @@ title: "PROJECT ANALYSIS"
 editor: visual
 ---
 
+## Abstract
+
 ## Introduction 
 
 
@@ -32,47 +34,80 @@ Test whether revenue patterns vary significantly by state and whether geography 
 <br>
 
 ## Queation 3
-#### Does mission type (NTEE major group) significantly influence whether a nonprofit is high-revenue?
+#### Which financial indicators most strongly distinguish between the largest nonprofit mission types?
 
-Focus on how mission category (Arts, Education, Health, Human Services, Religion, etc.) contributes to financial performance.
+Can financial indicators (assets, income, revenue, and revenue-to-income ratio) predict nonprofit mission type?
+Which financial indicators best distinguish among the five largest NTEE major groups?
+Do mission groups exhibit consistent financial profiles that align with operational demands and funding models?
+
+##### Hypotheses
+H1: Financial characteristics will significantly predict nonprofit mission category.
+H2: The revenue-to-income ratio will be among the strongest predictors, reflecting operational funding differences across sectors.
+H3: Education and Arts nonprofits will be associated with higher asset levels.
+H4: Youth Development, Human Services, and Religion Support organizations will rely more heavily on income rather than revenue.
 
 
-	•	Logistic Regression
-	•	Tree / Random Forest
-	•	KNN (optional)
-	
+##### Methods
+Data were obtained from the IRS Business Master File for U.S. tax-exempt organizations. Records with missing values for asset amount, income amount, revenue amount, or revenue-to-income ratio were excluded. The final analytic sample included nonprofits across 27 NTEE major groups, but logistic models were restricted to the five groups with the highest counts: Education (B), Human Services (P), Arts (A), Youth Development (N), and Religion Support (X).
+
+Variables
+Dependent Variables. We used five binary indicators, each representing whether the organization belonged to a specific NTEE major group (e.g., NTEE_B = 1 if Education, 0 otherwise).
+
+Predictors Variables. Using z-scores we standardized the predictor variables allowing odds ratios to be interpreted relative to a one-standard-deviation change.
+
+ - ASSET_s: Total assets
+ - INCOME_s: Total income
+ - REV_s: Total revenue
+ - RtoI_s: Revenue-to-income ratio
+
+##### Analytic Strategy
+
+Five separate logistic regression models were estimated:
+
+Odds ratios and 95% Wald confidence intervals were calculated for all predictors.
+
+Given the large sample size, some models produced warnings for probabilities near 0 or 1, which is expected but does not compromise overall interpretability of standardized coefficients.
+
+
+##### Results
+
+A series of standardized logistic regression models were estimated to examine how key financial indicators—assets, income, revenue, and the revenue-to-income ratio—predict membership in the five largest NTEE mission groups: Education (B), Human Services (P), Arts (A), Youth Development (N), and Religion Support (X). The resulting odds ratios and 95% confidence intervals are summarized in Table 2, and coefficient patterns are visualized in Figures 1 and 2.
+
+Across models, assets and income consistently emerged as the strongest predictors of organizational mission type. For Education organizations, higher standardized asset levels were associated with slightly greater odds of being classified under Education (OR = 1.17, CI [1.13, 1.21]), while higher income modestly decreased those odds (OR = 0.93, CI [0.90, 0.96]). This pattern suggests that Education nonprofits tend to hold comparatively large financial positions but do not necessarily operate with unusually high revenue margins.
+
+In contrast, Human Services organizations showed the opposite pattern: asset levels strongly reduced the likelihood of belonging to this group (OR = 0.57, CI [0.50, 0.65]), whereas the revenue-to-income ratio substantially increased the odds (OR = 1.24, CI [1.22, 1.27]). This indicates that Human Services nonprofits typically operate with leaner balance sheets but rely more heavily on converting revenue into operational capacity.
+
+The Arts sector demonstrated a distinct financial profile. Higher asset levels sharply increased the odds of being an Arts organization (OR = 1.47, CI [1.34, 1.61]), while higher revenue substantially reduced those odds (OR = 0.04, CI [0.03, 0.06]). As illustrated in Figures 1 and 2, the Arts sector exhibits the strongest separation between asset dependence and revenue patterns, consistent with many arts organizations relying heavily on endowments, grants, and non-operational funding sources.
+
+Youth Development organizations showed especially strong associations with income: higher income values increased the odds of belonging to this group by more than 2.5 times (OR = 2.56, CI [2.29, 2.85]). Meanwhile, both revenue and assets decreased those odds, suggesting that youth organizations operate with less accumulated wealth but sustained operational funding.
+
+Finally, Religion Support organizations displayed a distinctive financial signature. Higher income levels strongly increased the odds of belonging to this group (OR = 2.72, CI [2.27, 3.27]), while higher revenue sharply decreased those odds (OR = 0.0005, CI [0.0003, 0.0011]). Additionally, a higher revenue-to-income ratio strongly predicted religious classification (OR = 1.42, CI [1.38, 1.46]). As shown in Table 2 and Figures 1–2, Religion Support organizations are financially unique: they show strong reliance on income flows and comparatively low accumulation of revenue relative to income.
+
+Across all five mission types, Figure 1 highlights clear visual divergence in effect sizes, particularly the extremely small revenue odds ratios for Arts, Youth, and Religion. Figure 2 presents an integrated view of confidence intervals and demonstrates that financial indicators reliably differentiate organizational missions. Together, these findings show that even simple financial metrics capture meaningful structural differences between nonprofit mission types.
+
+![Odds Ratios and 95% Confidence Intervals Across Top NTEE Groupss](ntee_results_table.png){width=200}
+ntee_results_table
+![Odds Ratios for Financial Predictors Across Top NTEE Groups](Odds Ratios for Financial Predictors Across Top NTEE Groups.jpeg){width=200}
+
+##### Discussion
+
+This study examined whether financial characteristics—assets, income, revenue, and revenue-to-income ratios—help distinguish the largest nonprofit mission groups in the NTEE system. Across the five logistic models, financial indicators showed clear and interpretable differences between sectors. As shown in Table 2 and visualized in Figures 1 and 2, each mission type displays a distinct financial pattern.
+
+Assets played a central role for several groups. Education and Arts organizations were more likely to have higher asset levels, suggesting reliance on endowments or long-term capital investments. In contrast, Human Services and Youth nonprofits tended to operate with fewer fixed resources, reflecting their focus on direct service delivery and short-term funding cycles.
+
+Income was especially important for Youth Development and Religion Support organizations. These groups appear to depend more on continuous financial inflows (such as donations or program fees), rather than accumulated assets. Meanwhile, the revenue-to-income ratio strongly distinguished Human Services and Religion Support groups, indicating differences in funding structures or operational efficiency.
+
+While revenue alone was not a strong predictor for most groups—likely due to its wide skew—its standardized form still helped reveal overall financial tendencies. Together, these results show that nonprofit mission categories align with meaningful financial signatures rather than arbitrary labels.
+
+##### Conclusion
+
+Overall, the findings indicate that nonprofit mission type can be partially explained by basic financial characteristics. Assets, income, and revenue-to-income ratios consistently differentiated the five largest NTEE groups, demonstrating that financial structure varies systematically across sectors. Education and Arts organizations tend to hold more assets, while Youth and Religion Support organizations rely more on income. Human Services groups show distinctive revenue-to-income behavior, highlighting the financial pressures of service-oriented work.
+
+Although financial data do not capture the full complexity of nonprofit missions, these patterns show that mission type is closely tied to how organizations raise, manage, and rely on financial resources. Future work could expand the analysis by incorporating multi-year financial trends or geographic differences, but the present results already demonstrate that financial indicators offer meaningful insight into the nonprofit landscape.
+
 <br>
 
-## Queation 4
-#### Do group-affiliated nonprofits differ from standalone nonprofits in their likelihood of being high-revenue?
 
-Examine whether belonging to a parent organization (group ruling) affects financial capacity
-
-	•	Logistic Regression
-	•	Decision Tree
-	•	Random Forest<br>
-
-## Queation 5
-#### Can a nonprofit’s mission type (NTEE major group) be predicted using its financial indicators and organizational attributes?
-
-Flip the previous questions: instead of predicting income from mission, predict mission from financial structure.
-
-
-	•	Multinomial Logistic Regression
-	•	Random Forest
-	•	KNN
-	
-<br>
-
-## Queation 6
-#### Are organizational characteristics able to predict whether a nonprofit has a high asset-to-revenue ratio?
-
-Look at financial efficiency or stability instead of raw income.
-
-
-Same classification models.
-
-<br>
 
 ## Key Findings 
 <br>

@@ -5,12 +5,17 @@ editor: visual
 
 ## Cleaning The Data
 
-```{r}
+
 eo.pr <- read.csv('/Users/veronicawood/School/GM Fall 2025 /STAT 515 - Applied Statistics and Visualization for Analytics/Final project/eo_pr.csv')
+
 eo.xx <- read.csv('/Users/veronicawood/School/GM Fall 2025 /STAT 515 - Applied Statistics and Visualization for Analytics/Final project/eo_xx.csv')
+
 eo1<- read.csv('/Users/veronicawood/School/GM Fall 2025 /STAT 515 - Applied Statistics and Visualization for Analytics/Final project/eo1 (1).csv')
+
 eo2 <- read.csv('/Users/veronicawood/School/GM Fall 2025 /STAT 515 - Applied Statistics and Visualization for Analytics/Final project/eo2.csv')
+
 eo3 <- read.csv('/Users/veronicawood/School/GM Fall 2025 /STAT 515 - Applied Statistics and Visualization for Analytics/Final project/eo3.csv')
+
 eo4 <- read.csv('/Users/veronicawood/School/GM Fall 2025 /STAT 515 - Applied Statistics and Visualization for Analytics/Final project/eo4.csv')
 
 library(dplyr)
@@ -42,11 +47,11 @@ tax.2024 <- tax.all %>%
 
 
 
-```
+
 
 ## Research Question One 
 
-```{r}
+
 tax.2024$GroupStatus <- ifelse(tax.2024$GROUP == 0,
                                "Standalone", "GroupAffiliated")
 tax.2024$GroupStatus <- factor(tax.2024$GroupStatus)
@@ -58,7 +63,7 @@ tax.2024$HighIncome <- ifelse(tax.2024$INCOME_AMT > median_income_2024,
 tax.2024$HighIncome <- factor(tax.2024$HighIncome,
                               levels = c("Low","High"))
                               
-```
+
 
 ## Research Question Two 
 ## Research Question Three 
