@@ -2,7 +2,7 @@
 title: "FINAL CODE"
 editor: visual
 ---
-
+# https://www.irs.gov/charities-non-profits/exempt-organizations-business-master-file-extract-eo-bmf
 ## Cleaning The Data
 
 
@@ -19,6 +19,8 @@ eo3 <- read.csv('/Users/veronicawood/School/GM Fall 2025 /STAT 515 - Applied Sta
 eo4 <- read.csv('/Users/veronicawood/School/GM Fall 2025 /STAT 515 - Applied Statistics and Visualization for Analytics/Final project/eo4.csv')
 
 library(dplyr)
+
+# We first combind the different region 
 
 big_df <- bind_rows(eo.pr, eo.xx, eo1, eo2, eo3, eo4)
 
@@ -42,6 +44,7 @@ tax.all <- tax.all %>%
   filter(TaxDate >= cutoff)
 
 table(floor(tax.all$TAX_PERIOD / 100))
+
 tax.2024 <- tax.all %>%
   filter(floor(TAX_PERIOD / 100) == 2024)
 

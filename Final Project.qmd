@@ -104,9 +104,7 @@ While revenue alone was not a strong predictor for most groups—likely due to i
 Overall, the findings indicate that nonprofit mission type can be partially explained by basic financial characteristics. Assets, income, and revenue-to-income ratios consistently differentiated the five largest NTEE groups, demonstrating that financial structure varies systematically across sectors. Education and Arts organizations tend to hold more assets, while Youth and Religion Support organizations rely more on income. Human Services groups show distinctive revenue-to-income behavior, highlighting the financial pressures of service-oriented work.
 
 Although financial data do not capture the full complexity of nonprofit missions, these patterns show that mission type is closely tied to how organizations raise, manage, and rely on financial resources. Future work could expand the analysis by incorporating multi-year financial trends or geographic differences, but the present results already demonstrate that financial indicators offer meaningful insight into the nonprofit landscape.
-
 <br>
-
 
 
 ## Key Findings 
