@@ -4,7 +4,7 @@ subtitle: "Applied Statistics and Visualization for Analytics Final Project"
 about: 
   template: marquee
 ---
-
+ 
 #### Welcome and thanks for taking the time to check out our STATs final. During this project, we investigate financial predictors of U.S. tax-exempt organizations. Below is some additional information about the two members of Group Two. We hope you enjoy reading!
 
 

@@ -166,7 +166,7 @@ We used a Logistic Regression model with the state as the sole predictor to dete
 ## Results & Findings 
 
 ## Discussion
-This study examined whether financial characteristics—assets, income, revenue, and revenue-to-income ratios—help distinguish the largest nonprofit mission groups in the NTEE system. Across the five logistic models, financial indicators showed clear and interpretable differences between sectors. As shown in Table 2 and visualized in Figures 1 and 2, each mission type displays a distinct financial pattern.
+This study examined whether financial characteristics—assets, income, revenue, and revenue-to-income ratios—help distinguish the largest nonprofit mission groups in the NTEE system. Across the five logistic models, financial indicators showed clear and interpretative differences between sectors. As shown in Table 2 and visualized in Figures 1 and 2, each mission type displays a distinct financial pattern.
 
 Assets played a central role for several groups. Education and Arts organizations were more likely to have higher asset levels, suggesting reliance on endowments or long-term capital investments. In contrast, Human Services and Youth nonprofits tended to operate with fewer fixed resources, reflecting their focus on direct service delivery and short-term funding cycles.
 
