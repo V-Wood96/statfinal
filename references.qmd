@@ -9,3 +9,9 @@ editor: visual
 https://www.irs.gov/charities-non-profits/exempt-organizations-business-master-file-extract-eo-bmf 
 
 <br>
+
+
+
+
+AI Usage Disclosure - 
+This paper involved Level 3 usage under the IA Assessment Scale (Furze, 2024). AI was used for clarifying statistical concepts, refining code, and improving organization and flow. All statistical reasoning, data analysis, modeling decisions, and interpretations were conducted by the author.

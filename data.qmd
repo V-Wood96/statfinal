@@ -5,9 +5,9 @@ editor: visual
 
 # About the Data
 
-[Link: IRS Exempt Organizations Business](https://www.irs.gov/charities-non-profits/exempt-organizations-business-master-file-extract-eo-bmf)
+<u>Internal Revenue Service (IRS) Exempt Organizations Division: Factors and variables that influence revenue and income in specific regions.</u>
 
-### Internal Revenue Service (IRS) Exempt Organizations Division: Factors and variables that influence revenue and income in specific regions.
+[Link: IRS Exempt Organizations Business](https://www.irs.gov/charities-non-profits/exempt-organizations-business-master-file-extract-eo-bmf)
 
 ### Understanding the data
 The IRS Exempt Organizations Business Master File provides organizational and financial information for all registered tax-exempt nonprofits in the United States. These organizations file annual returns with the IRS, reporting key financial measures such as total assets, total revenue, and total income. Unlike for-profit firms, nonprofits are legally prohibited from distributing profits to owners or shareholders. Instead, any financial surplus must be reinvested into the organization’s mission. For this reason, financial indicators in nonprofit datasets represent organizational capacity and funding structure, not profit in the traditional business sense.
@@ -53,9 +53,6 @@ Understanding the data requires recognizing that nonprofit financial indicators 
 | NTEE_CD          | National Taxonomy of exempt Entities code |
 | Sort_Name        | Sort name                                 |
 
-
-
-### Understanding the data
 
 
 ### Data Cleaning
