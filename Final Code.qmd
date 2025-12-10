@@ -67,6 +67,768 @@ tax.2024$HighIncome <- factor(tax.2024$HighIncome,
                               levels = c("Low","High"))
                               
 
+ibrary(dplyr)
+library(tidyr)
+library(ggplot2)
+library(forcats)
+library(caret)
+library(tree)
+library(randomForest)
+library(class)
+library(glmnet)
+library(cluster)
+library(factoextra)
+library(broom)
+library(gt)
+library(grid)
+library(nnet)
+
+eo.pr <- read.csv('/Users/veronicawood/School/GM Fall 2025 /STAT 515 - Applied Statistics and Visualization for Analytics/Final project/eo_pr.csv')
+eo.xx <- read.csv('/Users/veronicawood/School/GM Fall 2025 /STAT 515 - Applied Statistics and Visualization for Analytics/Final project/eo_xx.csv')
+eo1<- read.csv('/Users/veronicawood/School/GM Fall 2025 /STAT 515 - Applied Statistics and Visualization for Analytics/Final project/eo1 (1).csv')
+eo2 <- read.csv('/Users/veronicawood/School/GM Fall 2025 /STAT 515 - Applied Statistics and Visualization for Analytics/Final project/eo2.csv')
+eo3 <- read.csv('/Users/veronicawood/School/GM Fall 2025 /STAT 515 - Applied Statistics and Visualization for Analytics/Final project/eo3.csv')
+eo4 <- read.csv('/Users/veronicawood/School/GM Fall 2025 /STAT 515 - Applied Statistics and Visualization for Analytics/Final project/eo4.csv')
+
+big_df <- bind_rows(eo.pr, eo.xx, eo1, eo2, eo3, eo4)
+
+tax.all <- big_df %>%
+  filter(!is.na(INCOME_AMT),
+         INCOME_AMT > 0)
+
+states_50 <- state.abb
+
+tax.all <- tax.all %>%
+  filter(STATE %in% states_50)
+
+
+tax.all$TaxDate <- as.Date(
+  paste0(tax.all$TAX_PERIOD, "01"),
+  format = "%Y%m%d")
+
+cutoff <- as.Date("2021-01-01")
+
+tax.all <- tax.all %>%
+  filter(TaxDate >= cutoff)
+
+tax.2024 <- tax.all %>%
+  filter(floor(TAX_PERIOD / 100) == 2024)
+
+tax.2024 <- tax.2024 %>%
+  select(-STREET, -SORT_NAME, -ICO)
+
+tax.2024[tax.2024 == ""] <- NA
+
+
+tax.2024 <- tax.2024 %>%
+  mutate(
+    GroupStatus = ifelse(GROUP == 0, "Standalone", "GroupAffiliated"),
+    GroupStatus = factor(GroupStatus))
+
+median_income_2024 <- median(tax.2024$INCOME_AMT, na.rm = TRUE)
+
+tax.2024 <- tax.2024 %>%
+  mutate(
+    HighIncome = ifelse(INCOME_AMT > median_income_2024, "High", "Low"),
+    HighIncome = factor(HighIncome, levels = c("Low", "High")))
+
+
+tax.2024$NTEE_CD <- ifelse(
+  is.na(tax.2024$NTEE_CD) | tax.2024$NTEE_CD == "",
+  "Unknown",
+  tax.2024$NTEE_CD)
+
+tax.2024$NTEE_CD <- as.character(tax.2024$NTEE_CD)
+tax.2024$NTEE_MAJOR <- substr(tax.2024$NTEE_CD, 1, 1)
+tax.2024$NTEE_MAJOR[tax.2024$NTEE_CD == "Unknown"] <- "Unknown"
+tax.2024$NTEE_MAJOR <- factor(tax.2024$NTEE_MAJOR)
+
+
+tax.2024 <- tax.2024 %>%
+  filter(!is.na(REVENUE_AMT),
+         REVENUE_AMT > 0)
+
+
+tax <- tax.2024 %>%
+  mutate(
+    Income_To_Revenue = ifelse(REVENUE_AMT > 0, INCOME_AMT / REVENUE_AMT, NA_real_),
+    Revenue_To_Income = ifelse(INCOME_AMT > 0, REVENUE_AMT / INCOME_AMT, NA_real_),
+    Income_Gap_Pct = ifelse(
+      INCOME_AMT == 0 | is.na(INCOME_AMT),
+      NA_real_,
+      (INCOME_AMT - REVENUE_AMT) / INCOME_AMT
+    ),
+    Asset_to_Income_Ratio = ifelse(INCOME_AMT > 0, ASSET_AMT / INCOME_AMT, NA_real_),
+    Revenue_Dep_Ratio     = ifelse(INCOME_AMT > 0, REVENUE_AMT / INCOME_AMT, NA_real_),
+    Liquidity_Ratio       = ifelse(REVENUE_AMT > 0, ASSET_AMT / REVENUE_AMT, NA_real_),
+    Log_Asset_to_Income = log1p(Asset_to_Income_Ratio),
+    Log_Revenue_Dep     = log1p(Revenue_Dep_Ratio),
+    Log_Liquidity       = log1p(Liquidity_Ratio)
+  ) %>%
+  filter(
+    !is.na(ASSET_AMT),
+    !is.na(INCOME_AMT),
+    !is.na(REVENUE_AMT),
+    !is.na(Revenue_To_Income),
+    !is.na(NTEE_MAJOR)
+  ) %>%
+  mutate(
+    ASSET_s  = as.numeric(scale(ASSET_AMT)),
+    INCOME_s = as.numeric(scale(INCOME_AMT)),
+    REV_s    = as.numeric(scale(REVENUE_AMT)),
+    RtoI_s   = as.numeric(scale(Revenue_To_Income)))
+
+tax2 <- tax   
+
+ntee_counts <- tax2 %>%
+  count(NTEE_MAJOR, sort = TRUE)
+
+ggplot(ntee_counts, aes(x = reorder(NTEE_MAJOR, -n), y = n)) +
+  geom_col(fill = "steelblue") +
+  labs(
+    title = "Count of Organizations by NTEE Major Code",
+    x = "NTEE Major Category",
+    y = "Count"
+  ) +
+  theme_minimal(base_size = 14)
+
+tax2 <- tax2 %>%
+  mutate(
+    NTEE_B = ifelse(NTEE_MAJOR == "B", 1, 0),
+    NTEE_P = ifelse(NTEE_MAJOR == "P", 1, 0),
+    NTEE_A = ifelse(NTEE_MAJOR == "A", 1, 0),
+    NTEE_N = ifelse(NTEE_MAJOR == "N", 1, 0),
+    NTEE_X = ifelse(NTEE_MAJOR == "X", 1, 0))
+
+
+model_B_std <- glm(
+  NTEE_B ~ ASSET_s + INCOME_s + REV_s + RtoI_s,
+  data   = tax2, family = binomial)
+model_P_std <- glm(
+  NTEE_P ~ ASSET_s + INCOME_s + REV_s + RtoI_s,
+  data   = tax2, family = binomial)
+model_A_std <- glm(
+  NTEE_A ~ ASSET_s + INCOME_s + REV_s + RtoI_s,
+  data   = tax2, family = binomial)
+model_N_std <- glm(
+  NTEE_N ~ ASSET_s + INCOME_s + REV_s + RtoI_s,
+  data   = tax2, family = binomial)
+model_X_std <- glm(
+  NTEE_X ~ ASSET_s + INCOME_s + REV_s + RtoI_s,
+  data   = tax2, family = binomial)
+
+results_std <- list(
+  Education_B       = tidy(model_B_std, exponentiate = TRUE),
+  HumanServices_P   = tidy(model_P_std, exponentiate = TRUE),
+  Arts_A            = tidy(model_A_std, exponentiate = TRUE),
+  Youth_N           = tidy(model_N_std, exponentiate = TRUE),
+  ReligionSupport_X = tidy(model_X_std, exponentiate = TRUE))
+
+wald_std <- lapply(
+  list(model_B_std, model_P_std, model_A_std, model_N_std, model_X_std),
+  function(m) exp(confint.default(m)))
+
+for (i in seq_along(results_std)) {
+  results_std[[i]]$conf.low  <- wald_std[[i]][, 1]
+  results_std[[i]]$conf.high <- wald_std[[i]][, 2]
+}
+
+coef_plot_data <- bind_rows(
+  results_std$Education_B       %>% mutate(Model = "Education (B)"),
+  results_std$HumanServices_P   %>% mutate(Model = "Human Services (P)"),
+  results_std$Arts_A            %>% mutate(Model = "Arts (A)"),
+  results_std$Youth_N           %>% mutate(Model = "Youth (N)"),
+  results_std$ReligionSupport_X %>% mutate(Model = "Religion Support (X)")
+) %>%
+  filter(term != "(Intercept)") %>%
+  mutate(
+    term = recode(term,
+                  "ASSET_s" = "Assets (std)",
+                  "INCOME_s" = "Income (std)",
+                  "REV_s"    = "Revenue (std)",
+                  "RtoI_s"   = "Revenue-to-Income (std)"))
+
+ggplot(coef_plot_data,
+       aes(x = estimate, y = fct_rev(term), color = Model)) +
+  geom_vline(xintercept = 1, linetype = "dashed", color = "gray40") +
+  geom_point(size = 3, position = position_dodge(width = 0.6)) +
+  geom_errorbar(aes(xmin = conf.low, xmax = conf.high),
+                width = 0.2,
+                position = position_dodge(width = 0.6)) +
+  scale_x_log10() +
+  labs(
+    title = "Odds Ratios for Financial Predictors Across Top NTEE Groups",
+    x = "Odds Ratio (log scale)",
+    y = "Predictor"
+  ) +
+  theme_minimal(base_size = 14) +
+  theme(
+    legend.position   = "right",
+    legend.box.margin = unit(c(0, 30, 0, 10), "pt"),
+    plot.margin       = unit(c(20, 40, 10, 10), "pt"),
+    plot.title        = element_text(hjust = 0.5, size = 18, face = "bold"))
+
+
+apa_table <- bind_rows(
+  results_std$Education_B       %>% mutate(Model = "Education (B)"),
+  results_std$HumanServices_P   %>% mutate(Model = "Human Services (P)"),
+  results_std$Arts_A            %>% mutate(Model = "Arts (A)"),
+  results_std$Youth_N           %>% mutate(Model = "Youth (N)"),
+  results_std$ReligionSupport_X %>% mutate(Model = "Religion Support (X)")
+) %>%
+  filter(term != "(Intercept)") %>%
+  mutate(
+    term = recode(term,
+                  "ASSET_s" = "Assets (std)",
+                  "INCOME_s" = "Income (std)",
+                  "REV_s"    = "Revenue (std)",
+                  "RtoI_s"   = "Revenue-to-Income (std)"),
+    OR_CI = sprintf("%.2f [%.2f, %.2f]", estimate, conf.low, conf.high)
+  ) %>%
+  select(term, Model, OR_CI) %>%
+  pivot_wider(names_from = Model, values_from = OR_CI) %>%
+  mutate(term = factor(term,
+                       levels = c("Assets (std)", "Income (std)",
+                                  "Revenue (std)", "Revenue-to-Income (std)"))) %>%
+  arrange(term)
+
+gt_table <- apa_table %>%
+  gt() %>%
+  tab_header(
+    title = "Odds Ratios and 95% Confidence Intervals Across NTEE Groups")
+
+
+run_balanced_model <- function(data, group_letter) {
+  data <- data %>%
+    mutate(Outcome = ifelse(NTEE_MAJOR == group_letter, "Yes", "No")) %>%
+    mutate(Outcome = factor(Outcome, levels = c("No", "Yes")))
+  
+  df <- data %>%
+    select(Outcome, ASSET_s, INCOME_s, REV_s, RtoI_s)
+  
+  set.seed(123)
+  df_bal <- upSample(
+    x     = df %>% select(-Outcome),
+    y     = df$Outcome,
+    yname = "Outcome")
+  model <- glm(
+    Outcome ~ ASSET_s + INCOME_s + REV_s + RtoI_s,
+    data   = df_bal,
+    family = binomial)
+  pred_prob <- predict(model, type = "response")
+  pred      <- ifelse(pred_prob > 0.5, "Yes", "No")
+  
+  cm <- confusionMatrix(
+    factor(pred, levels = c("No", "Yes")),
+    df_bal$Outcome)
+  list(model = model, confusion = cm, group = group_letter)
+}
+
+results_B <- run_balanced_model(tax2, "B")
+results_P <- run_balanced_model(tax2, "P")
+results_A <- run_balanced_model(tax2, "A")
+results_N <- run_balanced_model(tax2, "N")
+results_X <- run_balanced_model(tax2, "X")
+
+accuracy_df <- tibble(
+  Group = c("Arts (A)", "Education (B)", "Human Services (P)",
+            "Religion Support (X)", "Youth (N)"),
+  Accuracy = c(
+    results_A$confusion$overall["Accuracy"],
+    results_B$confusion$overall["Accuracy"],
+    results_P$confusion$overall["Accuracy"],
+    results_X$confusion$overall["Accuracy"],
+    results_N$confusion$overall["Accuracy"]))
+
+ggplot(accuracy_df, aes(x = Group, y = Accuracy, fill = Group)) +
+  geom_col(width = 0.7, color = "black") +
+  geom_text(aes(label = sprintf("%.3f", Accuracy)),
+            vjust = -0.5, size = 4) +
+  scale_y_continuous(limits = c(0, 1)) +
+  labs(
+    title = "Model Accuracy Across Balanced Logistic Models",
+    x = "NTEE Group",
+    y = "Accuracy (0–1)"
+  ) +
+  theme_minimal(base_size = 14) +
+  theme(legend.position = "none")
+
+tax.129 <- tax %>%
+  select(-EIN, -NAME, -CITY) %>%
+  filter(!is.na(REVENUE_AMT))
+
+tax.independent <- tax.129 %>%
+  filter(AFFILIATION %in% c(3))
+
+tax.status <- tax.independent %>%
+  filter(STATUS %in% c(1))
+
+tax.ntee <- tax.status %>%
+  filter(!is.na(NTEE_MAJOR))
+
+tax.small <- tax.ntee %>%
+  select(-GROUP, -AFFILIATION, -STATUS, -GroupStatus,
+         -TaxDate, -NTEE_CD, -RULING, -ACCT_PD)
+
+tax.small <- tax.small %>%
+  mutate(
+    Income_Gap_Pct = ifelse(
+      is.na(INCOME_AMT) | INCOME_AMT == 0,
+      NA_real_,
+      (INCOME_AMT - REVENUE_AMT) / INCOME_AMT))
+
+tax.small_clean <- tax.small %>%
+  filter(INCOME_AMT > 0) %>%
+  mutate(
+    Revenue_Exceeds_Income = REVENUE_AMT > INCOME_AMT,
+    IncomeGapCat = case_when(
+      Income_Gap_Pct < 0        ~ "Revenue > Income",
+      Income_Gap_Pct <= 0.10    ~ "Low Gap (0–10%)",
+      Income_Gap_Pct <= 0.30    ~ "Moderate Gap (10–30%)",
+      Income_Gap_Pct > 0.30     ~ "High Gap (30%+)",
+      TRUE                      ~ NA_character_
+    ),
+    Asset_to_Income_Ratio = ASSET_AMT / INCOME_AMT,
+    Log_Asset_to_Income   = log1p(Asset_to_Income_Ratio),
+    Revenue_Dep_Ratio     = REVENUE_AMT / INCOME_AMT,
+    Log_Revenue_Dep       = log1p(Revenue_Dep_Ratio),
+    Liquidity_Ratio       = ASSET_AMT / REVENUE_AMT,
+    Log_Liquidity         = log1p(Liquidity_Ratio))
+
+tax.small_clean$FOUNDATION <- factor(tax.small_clean$FOUNDATION)
+
+model_df <- tax.small_clean %>%
+  select(
+    FOUNDATION,
+    Log_Asset_to_Income, Log_Revenue_Dep, Log_Liquidity,
+    Income_Gap_Pct,
+    Asset_to_Income_Ratio, Revenue_Dep_Ratio, Liquidity_Ratio,
+    ASSET_AMT, INCOME_AMT, REVENUE_AMT
+  ) %>%
+  filter(across(everything(), ~ is.finite(.)))
+
+set.seed(123)
+index <- sample(nrow(model_df), 0.8 * nrow(model_df))
+train <- model_df[index, ]
+test  <- model_df[-index, ]
+
+multi_mod <- multinom(
+  FOUNDATION ~ Log_Asset_to_Income + Log_Revenue_Dep + Log_Liquidity +
+    Income_Gap_Pct + ASSET_AMT + INCOME_AMT + REVENUE_AMT,
+  data = train)
+
+pred_multi <- predict(multi_mod, newdata = test)
+mean(pred_multi == test$FOUNDATION)
+table(Predicted = pred_multi, Actual = test$FOUNDATION)
+
+
+rf_mod <- randomForest(
+  FOUNDATION ~ Log_Asset_to_Income + Log_Revenue_Dep + Log_Liquidity +
+    Income_Gap_Pct + ASSET_AMT + INCOME_AMT + REVENUE_AMT,
+  data = train,
+  ntree = 500,
+  mtry = 3,
+  importance = TRUE)
+
+pred_rf <- predict(rf_mod, newdata = test)
+mean(pred_rf == test$FOUNDATION)
+table(pred_rf, test$FOUNDATION)
+
+varImpPlot(rf_mod)
+ggsave("RF_variable_importance.png", width = 7, height = 4, dpi = 300)
+
+
+tax <- tax %>%
+  mutate(
+    FOUNDATION  = factor(FOUNDATION),
+    HighRevenue = ifelse(HighIncome == "High", 1, 0)
+  )
+
+model_glm <- tax %>%
+  select(
+    HighRevenue,
+    FOUNDATION,
+    Log_Asset_to_Income,
+    Log_Revenue_Dep,
+    Log_Liquidity,
+    Income_Gap_Pct
+  ) %>%
+  filter(
+    is.finite(Log_Asset_to_Income),
+    is.finite(Log_Revenue_Dep),
+    is.finite(Log_Liquidity),
+    is.finite(Income_Gap_Pct),
+    !is.na(HighRevenue))
+
+mod2 <- glm(
+  HighRevenue ~ FOUNDATION + Log_Asset_to_Income +
+    Log_Revenue_Dep + Log_Liquidity + Income_Gap_Pct,
+  family = binomial,
+  data = model_glm)
+
+summary(mod2)
+
+# 7.1 Adjusted predicted probabilities by foundation
+foundation_levels <- levels(model_glm$FOUNDATION)
+
+newdata <- data.frame(
+  FOUNDATION = foundation_levels,
+  Log_Asset_to_Income = mean(model_glm$Log_Asset_to_Income, na.rm = TRUE),
+  Log_Revenue_Dep     = mean(model_glm$Log_Revenue_Dep, na.rm = TRUE),
+  Log_Liquidity       = mean(model_glm$Log_Liquidity, na.rm = TRUE),
+  Income_Gap_Pct      = mean(model_glm$Income_Gap_Pct, na.rm = TRUE))
+
+newdata$pred <- predict(mod2, newdata = newdata, type = "response")
+
+ggplot(newdata, aes(x = FOUNDATION, y = pred, fill = FOUNDATION)) +
+  geom_col() +
+  theme_minimal(base_size = 14) +
+  labs(
+    title = "Predicted Probability of High Revenue by Foundation Type",
+    x = "Foundation Code",
+    y = "Predicted Probability"
+  ) +
+  scale_fill_brewer(palette = "Set2")
+
+# 7.2 Odds-ratio plot (log scale) for key predictors
+coef_df <- data.frame(
+  term     = names(coef(mod2)),
+  estimate = coef(mod2)
+) %>%
+  filter(term != "(Intercept)") %>%
+  mutate(
+    OR   = exp(estimate),
+    term = gsub("FOUNDATION", "Foundation ", term)
+  )
+
+ggplot(coef_df, aes(x = reorder(term, OR), y = OR)) +
+  geom_point(size = 3, color = "#2C3E50") +
+  geom_hline(yintercept = 1, linetype = "dashed", color = "red") +
+  scale_y_log10() +
+  coord_flip() +
+  labs(
+    title = "Odds Ratios (log scale) Predicting High Revenue",
+    x = "Predictor",
+    y = "Odds Ratio (log scale)"
+  ) +
+  theme_minimal(base_size = 14)
+
+ggsave("HighRevenue_OR_plot.png", width = 7, height = 4, dpi = 300)
+
+## -----------------------------------------------------------
+## Q1: Which org characteristics most strongly predict HighIncome?
+##     (NTEE major, GroupStatus, State, ACCT_PD, Assets, Revenue)
+## -----------------------------------------------------------
+
+library(randomForest)
+tax2024 <- tax.2024
+# Ensure basic types
+tax2024$HighIncome  <- factor(tax2024$HighIncome, levels = c("Low", "High"))
+tax2024$GroupStatus <- factor(tax2024$GroupStatus)
+tax2024$STATE       <- trimws(tax2024$STATE)
+tax2024$STATE       <- toupper(tax2024$STATE)
+
+# NTEE_major: first letter of NTEE code (if not already present)
+if (!"NTEE_major" %in% names(tax2024)) {
+  if ("NTEE_MAJOR" %in% names(tax2024)) {
+    tax2024$NTEE_major <- as.character(tax2024$NTEE_MAJOR)
+  } else {
+    tax2024$NTEE_major <- substr(tax2024$NTEE_CD, 1, 1)
+  }
+}
+
+tax2024$NTEE_major <- factor(tax2024$NTEE_major)
+
+# Drop rows with missing predictors
+model_cols <- c("HighIncome", "NTEE_major", "GroupStatus",
+                "STATE", "ACCT_PD", "ASSET_AMT", "REVENUE_AMT")
+tax2024_model <- na.omit(tax2024[ , model_cols])
+
+## Logistic regression (HighIncome)
+model_org_category <- glm(
+  HighIncome ~ NTEE_major + GroupStatus + STATE + ACCT_PD +
+    ASSET_AMT + REVENUE_AMT,
+  data   = tax2024_model,
+  family = binomial)
+
+summary(model_org_category)
+anova(model_org_category, test = "Chisq")  # deviance contribution of each block
+
+## Train / test split ----------------------------------------
+
+set.seed(123)
+idx  <- sample(1:nrow(tax2024_model), 0.8 * nrow(tax2024_model))
+train <- tax2024_model[idx, ]
+test  <- tax2024_model[-idx, ]
+
+model_test <- glm(
+  HighIncome ~ NTEE_major + GroupStatus + STATE + ACCT_PD +
+    ASSET_AMT + REVENUE_AMT,
+  data   = train,
+  family = binomial)
+
+# Predicted class (0.5 cutoff)
+pred_glm <- ifelse(
+  predict(model_test, newdata = test, type = "response") > 0.5,
+  "High", "Low")
+
+table(pred_glm, test$HighIncome)
+mean(pred_glm == test$HighIncome)    # ≈ 0.975
+
+## Random Forest version -------------------------------------
+
+set.seed(456)
+model_rf <- randomForest(
+  HighIncome ~ NTEE_major + GroupStatus + STATE + ACCT_PD +
+    ASSET_AMT + REVENUE_AMT,
+  data       = train,
+  ntree      = 200,
+  importance = TRUE)
+
+pred_rf <- predict(model_rf, newdata = test)
+table(pred_rf, test$HighIncome)
+mean(pred_rf == test$HighIncome)     # ≈ 0.98
+
+# Variable importance table + plot
+importance(model_rf)
+
+varImpPlot(
+  model_rf,
+  sort = TRUE,
+  main = "Random Forest Variable Importance (HighIncome)",
+  n.var = 6)
+
+
+## -----------------------------------------------------------
+## Q2: Does geography (STATE) meaningfully predict HighRevenue?
+## -----------------------------------------------------------
+
+# Clean state codes
+tax2024$STATE <- trimws(tax2024$STATE)
+tax2024$STATE <- toupper(tax2024$STATE)
+tax2024$STATE[tax2024$STATE == "" | is.na(tax2024$STATE)] <- "UNKNOWN"
+
+# HighRevenue: above/below median revenue (NOTE: overrides any prior HighRevenue)
+median_revenue <- median(tax2024$REVENUE_AMT, na.rm = TRUE)
+
+tax2024$HighRevenue <- ifelse(
+  tax2024$REVENUE_AMT >= median_revenue,
+  1L,
+  0L)
+
+overall_p <- mean(tax2024$HighRevenue)
+
+state_probs <- tax2024 %>%
+  group_by(STATE) %>%
+  summarise(p_HighRevenue = mean(HighRevenue), .groups = "drop") %>%
+  mutate(Difference = abs(p_HighRevenue - overall_p))
+
+# "Typical" state whose high-revenue share is closest to national average
+typical_state <- state_probs %>%
+  arrange(Difference) %>%
+  slice(1) %>%
+  pull(STATE)
+
+typical_state
+# e.g., "MT" in your run
+
+tax2024$STATE <- factor(tax2024$STATE)
+tax2024$STATE <- relevel(tax2024$STATE, ref = typical_state)
+
+model_typical_ref <- glm(
+  HighRevenue ~ STATE,
+  family = binomial,
+  data   = tax2024)
+
+summary(model_typical_ref)
+
+# Convert coefficients to odds ratios
+or_state <- exp(coef(model_typical_ref))
+or_state
+
+# For a nicer table:
+state_or_table <- data.frame(
+  STATE    = names(or_state),
+  OR       = unname(or_state))
+
+head(state_or_table)
+
+##########
+
+#### Final 
+##############
+
+# Remove invalid or non-mission NTEE categories
+tax2_clean <- tax2 %>%
+  filter(!NTEE_MAJOR %in% c("0", "c", "Unknown"))
+
+ggplot(tax2_clean, aes(x = NTEE_MAJOR, y = ASSET_AMT)) +
+  geom_violin(fill = "lightblue", alpha = 0.6) +
+  geom_boxplot(width = 0.2, outlier.size = 0.5) +
+  scale_y_log10() +
+  labs(
+    title = "Asset Distributions Across NTEE Mission Categories",
+    y = "Assets (log scale)",
+    x = "NTEE Major Group"
+  ) +
+  theme_minimal(base_size = 14)
+
+ggplot(tax2_clean, aes(x = NTEE_MAJOR, y = INCOME_AMT)) +
+  geom_violin(fill = "lightgreen", alpha = 0.6) +
+  geom_boxplot(width = 0.2, outlier.size = 0.5) +
+  scale_y_log10() +
+  labs(
+    title = "Income Distributions Across NTEE Mission Categories",
+    y = "Income (log scale)",
+    x = "NTEE Major Group"
+  ) +
+  theme_minimal(base_size = 14)
+
+ggplot(tax2, aes(x = NTEE_MAJOR, y = Revenue_To_Income)) +
+  geom_boxplot(fill = "tan") +
+  scale_y_log10() +
+  labs(
+    title = "Revenue-to-Income Ratios Across Mission Types",
+    x = "NTEE Major Group",
+    y = "Revenue / Income (log scale)"
+  ) +
+  theme_minimal(base_size = 14)
+
+ggplot(tax2_clean, aes(x = NTEE_MAJOR, y = Revenue_To_Income)) +
+  geom_boxplot(fill = "tan") +
+  scale_y_log10() +
+  labs(
+    title = "Revenue-to-Income Ratios Across Mission Types",
+    x = "NTEE Major Group",
+    y = "Revenue / Income (log scale)"
+  ) +
+  theme_minimal(base_size = 14)
+
+#############################
+
+tax2 <- tax2 %>%
+  mutate(
+    NTEE_B = ifelse(NTEE_MAJOR == "B", 1, 0),
+    NTEE_P = ifelse(NTEE_MAJOR == "P", 1, 0),
+    NTEE_A = ifelse(NTEE_MAJOR == "A", 1, 0),
+    NTEE_N = ifelse(NTEE_MAJOR == "N", 1, 0),
+    NTEE_X = ifelse(NTEE_MAJOR == "X", 1, 0)
+  )
+
+
+model_B_std <- glm(NTEE_B ~ ASSET_s + INCOME_s + REV_s + RtoI_s,
+                   data = tax2, family = binomial)
+
+model_P_std <- glm(NTEE_P ~ ASSET_s + INCOME_s + REV_s + RtoI_s,
+                   data = tax2, family = binomial)
+
+model_A_std <- glm(NTEE_A ~ ASSET_s + INCOME_s + REV_s + RtoI_s,
+                   data = tax2, family = binomial)
+
+model_N_std <- glm(NTEE_N ~ ASSET_s + INCOME_s + REV_s + RtoI_s,
+                   data = tax2, family = binomial)
+
+model_X_std <- glm(NTEE_X ~ ASSET_s + INCOME_s + REV_s + RtoI_s,
+                   data = tax2, family = binomial)
+
+results_std <- list(
+  B = tidy(model_B_std, exponentiate = TRUE),
+  P = tidy(model_P_std, exponentiate = TRUE),
+  A = tidy(model_A_std, exponentiate = TRUE),
+  N = tidy(model_N_std, exponentiate = TRUE),
+  X = tidy(model_X_std, exponentiate = TRUE))
+
+wald_std <- lapply(
+  list(model_B_std, model_P_std, model_A_std, model_N_std, model_X_std),
+  function(m) exp(confint.default(m)))
+
+
+for (i in seq_along(results_std)) {
+  results_std[[i]]$conf.low  <- wald_std[[i]][, 1]
+  results_std[[i]]$conf.high <- wald_std[[i]][, 2]
+}
+
+coef_plot_data <- bind_rows(
+  results_std$B %>% mutate(Model = "Education (B)"),
+  results_std$P %>% mutate(Model = "Human Services (P)"),
+  results_std$A %>% mutate(Model = "Arts (A)"),
+  results_std$N %>% mutate(Model = "Youth (N)"),
+  results_std$X %>% mutate(Model = "Religion Support (X)")
+) %>%
+  filter(term != "(Intercept)") %>%
+  mutate(
+    term = recode(term,
+                  "ASSET_s" = "Assets (std)",
+                  "INCOME_s" = "Income (std)",
+                  "REV_s"    = "Revenue (std)",
+                  "RtoI_s"   = "Revenue-to-Income (std)")
+  )
+
+ggplot(coef_plot_data, aes(x = estimate, y = fct_rev(term), color = Model)) +
+  geom_vline(xintercept = 1, linetype = "dashed") +
+  geom_point(size = 3, position = position_dodge(width = 0.6)) +
+  geom_errorbar(aes(xmin = conf.low, xmax = conf.high),
+                width = 0.2,
+                position = position_dodge(width = 0.6)) +
+  scale_x_log10() +
+  labs(
+    title = "Odds Ratios for Standardized Financial Predictors Across NTEE Groups",
+    x = "Odds Ratio (log scale)",
+    y = "Predictor"
+  ) +
+  theme_minimal(base_size = 14)
+
+run_balanced_model <- function(data, group_letter) {
+  data <- data %>%
+    mutate(Outcome = factor(ifelse(NTEE_MAJOR == group_letter, "Yes", "No")))
+  
+  df_bal <- upSample(
+    x = select(data, ASSET_s, INCOME_s, REV_s, RtoI_s),
+    y = data$Outcome,
+    yname = "Outcome"
+  )
+  
+  model <- glm(Outcome ~ ASSET_s + INCOME_s + REV_s + RtoI_s,
+               data = df_bal, family = binomial)
+  
+  pred <- ifelse(predict(model, type = "response") > 0.5, "Yes", "No")
+  
+  cm <- confusionMatrix(
+    factor(pred, levels = c("No", "Yes")),
+    df_bal$Outcome
+  )
+  
+  list(model = model, confusion = cm)
+}
+
+results_A <- run_balanced_model(tax2, "A")
+results_B <- run_balanced_model(tax2, "B")
+results_P <- run_balanced_model(tax2, "P")
+results_N <- run_balanced_model(tax2, "N")
+results_X <- run_balanced_model(tax2, "X")
+
+accuracy_df <- tibble(
+  Group = c("Arts (A)", "Education (B)", "Human Services (P)",
+            "Religion Support (X)", "Youth (N)"),
+  Accuracy = c(
+    results_A$confusion$overall["Accuracy"],
+    results_B$confusion$overall["Accuracy"],
+    results_P$confusion$overall["Accuracy"],
+    results_X$confusion$overall["Accuracy"],
+    results_N$confusion$overall["Accuracy"] ))
+
+ggplot(accuracy_df, aes(x = Group, y = Accuracy, fill = Group)) +
+  geom_col(width = 0.7, color = "black") +
+  geom_text(aes(label = sprintf("%.3f", Accuracy)),
+            vjust = -0.5, size = 4) +
+  scale_y_continuous(limits = c(0, 1)) +
+  labs(
+    title = "Model Accuracy Across Balanced Logistic Models",
+    x = "NTEE Group",
+    y = "Accuracy (0–1)"
+  ) +
+  theme_minimal() +
+  theme(legend.position = "none")
 
 ## Research Question Two 
 ## Research Question Three 
