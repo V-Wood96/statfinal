@@ -34,7 +34,7 @@ As a comparison we set up random forest model to also test the predictive streng
 
 ![Figure 2.](f1.png){width="700"}
 
-![Figure 3. Variable importance plot from the random forest model predicting foundation type.](rf. variable imporance.png){width="1200"}
+![Figure 3. Variable importance plot from the random forest model.](rf. variable imporance.png){width="1200"}
 
 <br> 
 
