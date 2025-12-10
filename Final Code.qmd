@@ -441,8 +441,7 @@ ggsave("RF_variable_importance.png", width = 7, height = 4, dpi = 300)
 tax <- tax %>%
   mutate(
     FOUNDATION  = factor(FOUNDATION),
-    HighRevenue = ifelse(HighIncome == "High", 1, 0)
-  )
+    HighRevenue = ifelse(HighIncome == "High", 1, 0))
 
 model_glm <- tax %>%
   select(
@@ -468,7 +467,7 @@ mod2 <- glm(
 
 summary(mod2)
 
-# 7.1 Adjusted predicted probabilities by foundation
+
 foundation_levels <- levels(model_glm$FOUNDATION)
 
 newdata <- data.frame(
@@ -490,7 +489,6 @@ ggplot(newdata, aes(x = FOUNDATION, y = pred, fill = FOUNDATION)) +
   ) +
   scale_fill_brewer(palette = "Set2")
 
-# 7.2 Odds-ratio plot (log scale) for key predictors
 coef_df <- data.frame(
   term     = names(coef(mod2)),
   estimate = coef(mod2)
@@ -498,8 +496,7 @@ coef_df <- data.frame(
   filter(term != "(Intercept)") %>%
   mutate(
     OR   = exp(estimate),
-    term = gsub("FOUNDATION", "Foundation ", term)
-  )
+    term = gsub("FOUNDATION", "Foundation ", term))
 
 ggplot(coef_df, aes(x = reorder(term, OR), y = OR)) +
   geom_point(size = 3, color = "#2C3E50") +
@@ -513,22 +510,13 @@ ggplot(coef_df, aes(x = reorder(term, OR), y = OR)) +
   ) +
   theme_minimal(base_size = 14)
 
-ggsave("HighRevenue_OR_plot.png", width = 7, height = 4, dpi = 300)
 
-## -----------------------------------------------------------
-## Q1: Which org characteristics most strongly predict HighIncome?
-##     (NTEE major, GroupStatus, State, ACCT_PD, Assets, Revenue)
-## -----------------------------------------------------------
-
-library(randomForest)
 tax2024 <- tax.2024
-# Ensure basic types
 tax2024$HighIncome  <- factor(tax2024$HighIncome, levels = c("Low", "High"))
 tax2024$GroupStatus <- factor(tax2024$GroupStatus)
 tax2024$STATE       <- trimws(tax2024$STATE)
 tax2024$STATE       <- toupper(tax2024$STATE)
 
-# NTEE_major: first letter of NTEE code (if not already present)
 if (!"NTEE_major" %in% names(tax2024)) {
   if ("NTEE_MAJOR" %in% names(tax2024)) {
     tax2024$NTEE_major <- as.character(tax2024$NTEE_MAJOR)
@@ -539,12 +527,12 @@ if (!"NTEE_major" %in% names(tax2024)) {
 
 tax2024$NTEE_major <- factor(tax2024$NTEE_major)
 
-# Drop rows with missing predictors
+
 model_cols <- c("HighIncome", "NTEE_major", "GroupStatus",
                 "STATE", "ACCT_PD", "ASSET_AMT", "REVENUE_AMT")
 tax2024_model <- na.omit(tax2024[ , model_cols])
 
-## Logistic regression (HighIncome)
+
 model_org_category <- glm(
   HighIncome ~ NTEE_major + GroupStatus + STATE + ACCT_PD +
     ASSET_AMT + REVENUE_AMT,
@@ -553,8 +541,6 @@ model_org_category <- glm(
 
 summary(model_org_category)
 anova(model_org_category, test = "Chisq")  # deviance contribution of each block
-
-## Train / test split ----------------------------------------
 
 set.seed(123)
 idx  <- sample(1:nrow(tax2024_model), 0.8 * nrow(tax2024_model))
@@ -567,7 +553,6 @@ model_test <- glm(
   data   = train,
   family = binomial)
 
-# Predicted class (0.5 cutoff)
 pred_glm <- ifelse(
   predict(model_test, newdata = test, type = "response") > 0.5,
   "High", "Low")
@@ -575,7 +560,6 @@ pred_glm <- ifelse(
 table(pred_glm, test$HighIncome)
 mean(pred_glm == test$HighIncome)    # ≈ 0.975
 
-## Random Forest version -------------------------------------
 
 set.seed(456)
 model_rf <- randomForest(
@@ -589,7 +573,6 @@ pred_rf <- predict(model_rf, newdata = test)
 table(pred_rf, test$HighIncome)
 mean(pred_rf == test$HighIncome)     # ≈ 0.98
 
-# Variable importance table + plot
 importance(model_rf)
 
 varImpPlot(
@@ -599,16 +582,11 @@ varImpPlot(
   n.var = 6)
 
 
-## -----------------------------------------------------------
-## Q2: Does geography (STATE) meaningfully predict HighRevenue?
-## -----------------------------------------------------------
-
-# Clean state codes
 tax2024$STATE <- trimws(tax2024$STATE)
 tax2024$STATE <- toupper(tax2024$STATE)
 tax2024$STATE[tax2024$STATE == "" | is.na(tax2024$STATE)] <- "UNKNOWN"
 
-# HighRevenue: above/below median revenue (NOTE: overrides any prior HighRevenue)
+
 median_revenue <- median(tax2024$REVENUE_AMT, na.rm = TRUE)
 
 tax2024$HighRevenue <- ifelse(
@@ -623,14 +601,13 @@ state_probs <- tax2024 %>%
   summarise(p_HighRevenue = mean(HighRevenue), .groups = "drop") %>%
   mutate(Difference = abs(p_HighRevenue - overall_p))
 
-# "Typical" state whose high-revenue share is closest to national average
 typical_state <- state_probs %>%
   arrange(Difference) %>%
   slice(1) %>%
   pull(STATE)
 
 typical_state
-# e.g., "MT" in your run
+
 
 tax2024$STATE <- factor(tax2024$STATE)
 tax2024$STATE <- relevel(tax2024$STATE, ref = typical_state)
@@ -642,21 +619,17 @@ model_typical_ref <- glm(
 
 summary(model_typical_ref)
 
-# Convert coefficients to odds ratios
+
 or_state <- exp(coef(model_typical_ref))
 or_state
 
-# For a nicer table:
+
 state_or_table <- data.frame(
   STATE    = names(or_state),
   OR       = unname(or_state))
 
 head(state_or_table)
 
-##########
-
-#### Final 
-##############
 
 # Remove invalid or non-mission NTEE categories
 tax2_clean <- tax2 %>%
@@ -703,8 +676,6 @@ ggplot(tax2_clean, aes(x = NTEE_MAJOR, y = Revenue_To_Income)) +
     y = "Revenue / Income (log scale)"
   ) +
   theme_minimal(base_size = 14)
-
-#############################
 
 tax2 <- tax2 %>%
   mutate(
@@ -829,8 +800,3 @@ ggplot(accuracy_df, aes(x = Group, y = Accuracy, fill = Group)) +
   ) +
   theme_minimal() +
   theme(legend.position = "none")
-
-## Research Question Two 
-## Research Question Three 
-## Research Question Four
-## Research Question Five
