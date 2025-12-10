@@ -98,7 +98,7 @@ ul.task-list li input[type="checkbox"] {
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./Final Project.html"> 
-<span class="menu-text">PROJECT ANALYSIS</span></a>
+<span class="menu-text">Financial and Organizational Predictors of Revenue, Income, and Mission Classification in U.S. Nonprofit Organizations</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./references.html"> 
@@ -126,8 +126,11 @@ ul.task-list li input[type="checkbox"] {
   <ul>
   <li><a href="#about-the-data" id="toc-about-the-data" class="nav-link active" data-scroll-target="#about-the-data">About the Data</a>
   <ul class="collapse">
-  <li><a href="#abstract" id="toc-abstract" class="nav-link" data-scroll-target="#abstract">Abstract</a></li>
+  <li><a href="#internal-revenue-service-irs-exempt-organizations-division-factors-and-variables-that-influence-revenue-and-income-in-specific-regions." id="toc-internal-revenue-service-irs-exempt-organizations-division-factors-and-variables-that-influence-revenue-and-income-in-specific-regions." class="nav-link" data-scroll-target="#internal-revenue-service-irs-exempt-organizations-division-factors-and-variables-that-influence-revenue-and-income-in-specific-regions.">Internal Revenue Service (IRS) Exempt Organizations Division: Factors and variables that influence revenue and income in specific regions.</a></li>
+  <li><a href="#understanding-the-data" id="toc-understanding-the-data" class="nav-link" data-scroll-target="#understanding-the-data">Understanding the data</a></li>
   <li><a href="#data-set" id="toc-data-set" class="nav-link" data-scroll-target="#data-set">Data Set</a></li>
+  <li><a href="#understanding-the-data-1" id="toc-understanding-the-data-1" class="nav-link" data-scroll-target="#understanding-the-data-1">Understanding the data</a></li>
+  <li><a href="#data-cleaning" id="toc-data-cleaning" class="nav-link" data-scroll-target="#data-cleaning">Data Cleaning</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -156,14 +159,20 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="about-the-data" class="level1">
 <h1>About the Data</h1>
-<section id="internal-revenue-service-irs-exempt-organizations-division-factors-and-variables-that-influence-revenue-and-income-in-specific-regions." class="level5">
-<h5 class="anchored" data-anchor-id="internal-revenue-service-irs-exempt-organizations-division-factors-and-variables-that-influence-revenue-and-income-in-specific-regions.">Internal Revenue Service (IRS) Exempt Organizations Division: Factors and variables that influence revenue and income in specific regions.</h5>
+<p><a href="https://www.irs.gov/charities-non-profits/exempt-organizations-business-master-file-extract-eo-bmf">Link: IRS Exempt Organizations Business</a></p>
+<section id="internal-revenue-service-irs-exempt-organizations-division-factors-and-variables-that-influence-revenue-and-income-in-specific-regions." class="level3">
+<h3 class="anchored" data-anchor-id="internal-revenue-service-irs-exempt-organizations-division-factors-and-variables-that-influence-revenue-and-income-in-specific-regions.">Internal Revenue Service (IRS) Exempt Organizations Division: Factors and variables that influence revenue and income in specific regions.</h3>
 </section>
-<section id="abstract" class="level2">
-<h2 class="anchored" data-anchor-id="abstract">Abstract</h2>
+<section id="understanding-the-data" class="level3">
+<h3 class="anchored" data-anchor-id="understanding-the-data">Understanding the data</h3>
+<p>The IRS Exempt Organizations Business Master File provides organizational and financial information for all registered tax-exempt nonprofits in the United States. These organizations file annual returns with the IRS, reporting key financial measures such as total assets, total revenue, and total income. Unlike for-profit firms, nonprofits are legally prohibited from distributing profits to owners or shareholders. Instead, any financial surplus must be reinvested into the organization’s mission. For this reason, financial indicators in nonprofit datasets represent organizational capacity and funding structure, not profit in the traditional business sense.</p>
+<p>A major limitation of the IRS dataset is that expense information is not included, meaning we cannot directly calculate net income, operational efficiency, or spending behavior. Instead, the variables available focus primarily on reported revenue (all funds received during the period), income (tax-defined components of financial inflow), and asset holdings (accumulated resources such as endowments, property, or investments). Because these measures vary tremendously in scale, understanding nonprofit finances requires interpreting them in context rather than relying on absolute amounts.</p>
+<p>The dataset also contains several categorical variables, such as NTEE mission codes (which classify the organization’s purpose), foundation type, subsection, and state of registration. Many of these categories are highly imbalanced because some mission areas and foundation types are far more common than others. The data also contain structural complexities, including right-skewed distributions, missing values, and inconsistent reporting across organizations.</p>
+<p>To make the dataset more suitable for statistical modeling, we derived several financial ratios that describe financial structure rather than size, such as the asset to income ratio, revenue dependence ratio, and liquidity ratio. These transformations help reveal how organizations generate and rely on financial resources, providing more meaningful insights into organizational scale and sustainability.</p>
+<p>Understanding the data requires recognizing that nonprofit financial indicators reflect capacity, funding patterns, and mission alignment, not profit-making behavior, and that the available IRS variables capture only part of the financial picture. Despite these limitations, the dataset offers a comprehensive view of the nonprofit landscape and supports analysis of the factors that shape organizational financial outcomes.</p>
 </section>
-<section id="data-set" class="level2">
-<h2 class="anchored" data-anchor-id="data-set">Data Set</h2>
+<section id="data-set" class="level3">
+<h3 class="anchored" data-anchor-id="data-set">Data Set</h3>
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -286,12 +295,30 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 </tbody>
 </table>
-<section id="data-cleaning" class="level4">
-<h4 class="anchored" data-anchor-id="data-cleaning">Data Cleaning</h4>
-<p><br></p>
-
-
 </section>
+<section id="understanding-the-data-1" class="level3">
+<h3 class="anchored" data-anchor-id="understanding-the-data-1">Understanding the data</h3>
+</section>
+<section id="data-cleaning" class="level3">
+<h3 class="anchored" data-anchor-id="data-cleaning">Data Cleaning</h3>
+<p><strong>1. Addressing Imbalance and Skew in Raw Financial Data</strong></p>
+<p>Financial variables such as asset amount, income amount, and revenue amount span several orders of magnitude. These distributions were extremely right-skewed, meaning that a small number of very large organizations dominated the scale of the data. Directly modeling raw values would therefore overweight extreme cases and reduce the model’s ability to detect meaningful patterns across the majority of nonprofits.</p>
+<p>To address this, financial ratios were created that express financial concepts relative to each other. These ratios help place organizations on a comparable scale regardless of absolute size.</p>
+<p><strong>2. Constructed Financial Ratios</strong></p>
+<p><u>Asset to Income Ratio</u></p>
+<p>Asset_to_Income_Ratio = ifelse(INCOME_AMT &gt; 0, ASSET_AMT / INCOME_AMT, NA_real_)</p>
+<p>This variable measures how many dollars of assets an organization holds for every dollar of income. It captures long-term financial capacity and helps distinguish asset-intensive organizations (such as Education or Arts) from those with leaner structures.</p>
+<p><u>Revenue Dependence Ratio</u></p>
+<p>Revenue_Dep_Ratio = ifelse(INCOME_AMT &gt; 0, REVENUE_AMT / INCOME_AMT, NA_real_)</p>
+<p>This ratio evaluates how much of the organization’s reported income is driven by revenue. A high ratio suggests heavy reliance on revenue sources, which may indicate growth-oriented or fee-driven operations, while lower values suggest greater dependence on contributions or grants.</p>
+<p><u>Liquidity Ratio</u></p>
+<p>Liquidity_Ratio = ifelse(REVENUE_AMT &gt; 0, ASSET_AMT / REVENUE_AMT, NA_real_)</p>
+<p>This variable captures the relationship between assets and revenue. Higher values indicate strong liquidity or a substantial reserve relative to annual revenue, which is often associated with financial stability.</p>
+<p><strong>3. Log Transformations to Reduce Skew</strong></p>
+<p>The ratios described above were still highly skewed. To address this, we applied the natural log transformation with log1p, which allows log scaling even when values are close to zero.</p>
+<p>Log_Asset_to_Income = log1p(Asset_to_Income_Ratio) Log_Revenue_Dep = log1p(Revenue_Dep_Ratio) Log_Liquidity = log1p(Liquidity_Ratio)</p>
+
+
 </section>
 </section>
 

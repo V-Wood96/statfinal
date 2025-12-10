@@ -145,6 +145,7 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title">PROJECT ANALYSIS</h1>
+<p class="subtitle lead">Financial and Organizational Predictors of Revenue, Income, and Mission Classification in U.S. Nonprofit Organizations</p>
 </div>
 
 
@@ -163,7 +164,7 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="abstract" class="level3">
 <h3 class="anchored" data-anchor-id="abstract">Abstract</h3>
-<p>This study examines how organizational characteristics and financial indicators relate to revenue outcomes and mission classifications among United States nonprofits. Using the 2024 IRS Exempt Organizations Business Master File, we analyze more than 360,000 tax-exempt organizations. Logistic regression, random forests, multinomial models, and exploratory data analysis show that assets and revenue are the strongest predictors of high income status, state-level geography contributes modest but statistically significant variation, mission categories differ systematically in their financial profiles, and financial indicators provide moderate predictive power for foundation classification. These findings highlight meaningful structural financial differences across the nonprofit sector and provide insight into the determinants of organizational scale and mission alignment.</p>
+<p><em>This study examines how organizational characteristics and financial indicators relate to revenue outcomes and mission classifications among United States nonprofits. Using the 2024 IRS Exempt Organizations Business Master File, we analyze more than 360,000 tax-exempt organizations. Logistic regression, random forests, multinomial models, and exploratory data analysis show that assets and revenue are the strongest predictors of high income status, state-level geography contributes modest but statistically significant variation, mission categories differ systematically in their financial profiles, and financial indicators provide moderate predictive power for foundation classification. These findings highlight meaningful structural financial differences across the nonprofit sector and provide insight into the determinants of organizational scale and mission alignment.</em></p>
 </section>
 <section id="introduction" class="level3">
 <h3 class="anchored" data-anchor-id="introduction">Introduction</h3>
@@ -171,6 +172,7 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="methods" class="level3">
 <h3 class="anchored" data-anchor-id="methods">Methods</h3>
+<p>To prepare the dataset for analysis, we applied several techniques covered in class. Exploratory data analysis was used to assess skew, missing values, and category imbalance. To create more interpretable predictors, we engineered financial structure ratios including asset to income, revenue dependence, and liquidity. These ratios were then log transformed to reduce skew and stabilize variance. Standardization was applied to continuous predictors before modeling. For classification tasks, we used logistic regression and random forest models, and oversampling techniques were applied to address class imbalance. These steps allowed us to analyze financial determinants of organizational outcomes using consistent and well-structured variables.</p>
 </section>
 <section id="question-1" class="level3">
 <h3 class="anchored" data-anchor-id="question-1">Question 1</h3>
@@ -224,8 +226,8 @@ ul.task-list li input[type="checkbox"] {
 <h3 class="anchored" data-anchor-id="question-3">Question 3</h3>
 <section id="to-what-extent-do-standardized-financial-indicators-predict-whether-an-organization-belongs-to-top-ntee-mission-categories" class="level4">
 <h4 class="anchored" data-anchor-id="to-what-extent-do-standardized-financial-indicators-predict-whether-an-organization-belongs-to-top-ntee-mission-categories">To what extent do standardized financial indicators predict whether an organization belongs to top NTEE mission categories?</h4>
-<p>H₀₃: Financial characteristics (assets, income, and revenue-to-income ratios) do not differ across NTEE major mission categories.</p>
-<p>H₁₃: At least one financial characteristic differs significantly across NTEE major mission categories.</p>
+<p>H₀₃: Financial characteristics do not differ across NTEE major mission categories.</p>
+<p>H₁₃: At least one financial characteristic differs across NTEE major mission categories.</p>
 <p>Exploratory analysis shows substantial variation in asset and income levels across mission types. For example, organizations in Education and Health tend to have higher median assets and income, while organizations in categories such as Arts or Youth display narrower distributions and smaller financial footprints. These patterns indicate that nonprofit sectors vary systematically in operational scale.</p>
 <p>The revenue-to-income ratio, which reflects financial structure, also varies across mission groups. While many categories cluster around similar median values, the distributions within categories are wide, showing diverse funding models even among organizations with similar missions. Some groups display long right-tail distributions, indicating subgroups with unusually high revenue performance relative to income.</p>
 <p>These exploratory patterns demonstrate clear differences across mission categories and support the inclusion of financial indicators in later predictive modeling.</p>

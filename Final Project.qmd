@@ -1,18 +1,20 @@
 ---
 title: "PROJECT ANALYSIS"
+subtitle: "Financial and Organizational Predictors of Revenue, Income, and Mission Classification in U.S. Nonprofit Organizations"
 editor: visual
 ---
 
-
 ### Abstract 
 
-This study examines how organizational characteristics and financial indicators relate to revenue outcomes and mission classifications among United States nonprofits. Using the 2024 IRS Exempt Organizations Business Master File, we analyze more than 360,000 tax-exempt organizations. Logistic regression, random forests, multinomial models, and exploratory data analysis show that assets and revenue are the strongest predictors of high income status, state-level geography contributes modest but statistically significant variation, mission categories differ systematically in their financial profiles, and financial indicators provide moderate predictive power for foundation classification. These findings highlight meaningful structural financial differences across the nonprofit sector and provide insight into the determinants of organizational scale and mission alignment.
+*This study examines how organizational characteristics and financial indicators relate to revenue outcomes and mission classifications among United States nonprofits. Using the 2024 IRS Exempt Organizations Business Master File, we analyze more than 360,000 tax-exempt organizations. Logistic regression, random forests, multinomial models, and exploratory data analysis show that assets and revenue are the strongest predictors of high income status, state-level geography contributes modest but statistically significant variation, mission categories differ systematically in their financial profiles, and financial indicators provide moderate predictive power for foundation classification. These findings highlight meaningful structural financial differences across the nonprofit sector and provide insight into the determinants of organizational scale and mission alignment.*
 
 ### Introduction
 
 Tax-exempt organizations receive federal tax benefits in exchange for providing public services such as charity, education, and healthcare. This study investigates how organizational classifications and financial characteristics influence revenue, income, and assets among United States nonprofits. Data were obtained from the IRS Exempt Organizations Business Master File. Descriptive analyses and regression models were used to examine financial patterns and identify predictors of high organizational income.
 
 ### Methods 
+
+To prepare the dataset for analysis, we applied several techniques covered in class. Exploratory data analysis was used to assess skew, missing values, and category imbalance. To create more interpretable predictors, we engineered financial structure ratios including asset to income, revenue dependence, and liquidity. These ratios were then log transformed to reduce skew and stabilize variance. Standardization was applied to continuous predictors before modeling. For classification tasks, we used logistic regression and random forest models, and oversampling techniques were applied to address class imbalance. These steps allowed us to analyze financial determinants of organizational outcomes using consistent and well-structured variables.
 
 ### Question 1
 #### Which organizational characteristics most strongly predict whether a nonprofit is high-Income?
@@ -49,9 +51,9 @@ We used a Logistic Regression model with the state as the sole predictor to dete
 
 ### Question 3
 #### To what extent do standardized financial indicators predict whether an organization belongs to top NTEE mission categories?
-H₀₃: Financial characteristics (assets, income, and revenue-to-income ratios) do not differ across NTEE major mission categories.
+H₀₃: Financial characteristics do not differ across NTEE major mission categories.
 
-H₁₃: At least one financial characteristic differs significantly across NTEE major mission categories.
+H₁₃: At least one financial characteristic differs across NTEE major mission categories.
 
 Exploratory analysis shows substantial variation in asset and income levels across mission types. For example, organizations in Education and Health tend to have higher median assets and income, while organizations in categories such as Arts or Youth display narrower distributions and smaller financial footprints. These patterns indicate that nonprofit sectors vary systematically in operational scale.
 

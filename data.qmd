@@ -3,15 +3,24 @@ title: "DATA"
 editor: visual
 ---
 
-
 # About the Data
 
+[Link: IRS Exempt Organizations Business](https://www.irs.gov/charities-non-profits/exempt-organizations-business-master-file-extract-eo-bmf)
 
-##### Internal Revenue Service (IRS) Exempt Organizations Division: Factors and variables that influence revenue and income in specific regions.
+### Internal Revenue Service (IRS) Exempt Organizations Division: Factors and variables that influence revenue and income in specific regions.
 
-## Abstract
+### Understanding the data
+The IRS Exempt Organizations Business Master File provides organizational and financial information for all registered tax-exempt nonprofits in the United States. These organizations file annual returns with the IRS, reporting key financial measures such as total assets, total revenue, and total income. Unlike for-profit firms, nonprofits are legally prohibited from distributing profits to owners or shareholders. Instead, any financial surplus must be reinvested into the organization’s mission. For this reason, financial indicators in nonprofit datasets represent organizational capacity and funding structure, not profit in the traditional business sense.
 
-## Data Set
+A major limitation of the IRS dataset is that expense information is not included, meaning we cannot directly calculate net income, operational efficiency, or spending behavior. Instead, the variables available focus primarily on reported revenue (all funds received during the period), income (tax-defined components of financial inflow), and asset holdings (accumulated resources such as endowments, property, or investments). Because these measures vary tremendously in scale, understanding nonprofit finances requires interpreting them in context rather than relying on absolute amounts.
+
+The dataset also contains several categorical variables, such as NTEE mission codes (which classify the organization’s purpose), foundation type, subsection, and state of registration. Many of these categories are highly imbalanced because some mission areas and foundation types are far more common than others. The data also contain structural complexities, including right-skewed distributions, missing values, and inconsistent reporting across organizations.
+
+To make the dataset more suitable for statistical modeling, we derived several financial ratios that describe financial structure rather than size, such as the asset to income ratio, revenue dependence ratio, and liquidity ratio. These transformations help reveal how organizations generate and rely on financial resources, providing more meaningful insights into organizational scale and sustainability.
+
+Understanding the data requires recognizing that nonprofit financial indicators reflect capacity, funding patterns, and mission alignment, not profit-making behavior, and that the available IRS variables capture only part of the financial picture. Despite these limitations, the dataset offers a comprehensive view of the nonprofit landscape and supports analysis of the factors that shape organizational financial outcomes.
+
+### Data Set
 
 | Variables        | Descriptions                              |
 |------------------|-------------------------------------------|
@@ -45,5 +54,48 @@ editor: visual
 | Sort_Name        | Sort name                                 |
 
 
-#### Data Cleaning 
-<br>
+
+### Understanding the data
+
+
+### Data Cleaning
+
+**1. Addressing Imbalance and Skew in Raw Financial Data**
+
+Financial variables such as asset amount, income amount, and revenue amount span several orders of magnitude. These distributions were extremely right-skewed, meaning that a small number of very large organizations dominated the scale of the data. Directly modeling raw values would therefore overweight extreme cases and reduce the model’s ability to detect meaningful patterns across the majority of nonprofits.
+
+To address this, financial ratios were created that express financial concepts relative to each other. These ratios help place organizations on a comparable scale regardless of absolute size.
+
+**2. Constructed Financial Ratios**
+
+<u>Asset to Income Ratio</u>
+
+Asset_to_Income_Ratio = ifelse(INCOME_AMT > 0, ASSET_AMT / INCOME_AMT, NA_real_)
+
+
+This variable measures how many dollars of assets an organization holds for every dollar of income.
+It captures long-term financial capacity and helps distinguish asset-intensive organizations (such as Education or Arts) from those with leaner structures.
+
+<u>Revenue Dependence Ratio</u>
+
+Revenue_Dep_Ratio = ifelse(INCOME_AMT > 0, REVENUE_AMT / INCOME_AMT, NA_real_)
+
+
+This ratio evaluates how much of the organization’s reported income is driven by revenue.
+A high ratio suggests heavy reliance on revenue sources, which may indicate growth-oriented or fee-driven operations, while lower values suggest greater dependence on contributions or grants.
+
+<u>Liquidity Ratio</u>
+
+Liquidity_Ratio = ifelse(REVENUE_AMT > 0, ASSET_AMT / REVENUE_AMT, NA_real_)
+
+
+This variable captures the relationship between assets and revenue.
+Higher values indicate strong liquidity or a substantial reserve relative to annual revenue, which is often associated with financial stability.
+
+**3. Log Transformations to Reduce Skew**
+
+The ratios described above were still highly skewed. To address this, we applied the natural log transformation with log1p, which allows log scaling even when values are close to zero.
+
+Log_Asset_to_Income = log1p(Asset_to_Income_Ratio)
+Log_Revenue_Dep     = log1p(Revenue_Dep_Ratio)
+Log_Liquidity       = log1p(Liquidity_Ratio)
