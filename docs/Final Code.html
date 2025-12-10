@@ -148,22 +148,8 @@ window.Quarto = {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#httpswww.irs.govcharities-non-profitsexempt-organizations-business-master-file-extract-eo-bmf" id="toc-httpswww.irs.govcharities-non-profitsexempt-organizations-business-master-file-extract-eo-bmf" class="nav-link active" data-scroll-target="#httpswww.irs.govcharities-non-profitsexempt-organizations-business-master-file-extract-eo-bmf">https://www.irs.gov/charities-non-profits/exempt-organizations-business-master-file-extract-eo-bmf</a>
-  <ul class="collapse">
-  <li><a href="#cleaning-the-data" id="toc-cleaning-the-data" class="nav-link" data-scroll-target="#cleaning-the-data">Cleaning The Data</a></li>
-  </ul></li>
-  <li><a href="#we-first-combind-the-different-region" id="toc-we-first-combind-the-different-region" class="nav-link" data-scroll-target="#we-first-combind-the-different-region">We first combind the different region</a>
-  <ul class="collapse">
-  <li><a href="#research-question-one" id="toc-research-question-one" class="nav-link" data-scroll-target="#research-question-one">Research Question One</a></li>
-  </ul></li>
-  <li><a href="#remove-invalid-or-non-mission-ntee-categories" id="toc-remove-invalid-or-non-mission-ntee-categories" class="nav-link" data-scroll-target="#remove-invalid-or-non-mission-ntee-categories">Remove invalid or non-mission NTEE categories</a></li>
-  </ul>
-</nav>
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -187,10 +173,6 @@ window.Quarto = {
 </header>
 
 
-<section id="httpswww.irs.govcharities-non-profitsexempt-organizations-business-master-file-extract-eo-bmf" class="level1">
-<h1>https://www.irs.gov/charities-non-profits/exempt-organizations-business-master-file-extract-eo-bmf</h1>
-<section id="cleaning-the-data" class="level2">
-<h2 class="anchored" data-anchor-id="cleaning-the-data">Cleaning The Data</h2>
 <p>eo.pr &lt;- read.csv(‘/Users/veronicawood/School/GM Fall 2025 /STAT 515 - Applied Statistics and Visualization for Analytics/Final project/eo_pr.csv’)</p>
 <p>eo.xx &lt;- read.csv(‘/Users/veronicawood/School/GM Fall 2025 /STAT 515 - Applied Statistics and Visualization for Analytics/Final project/eo_xx.csv’)</p>
 <p>eo1&lt;- read.csv(‘/Users/veronicawood/School/GM Fall 2025 /STAT 515 - Applied Statistics and Visualization for Analytics/Final project/eo1 (1).csv’)</p>
@@ -198,10 +180,6 @@ window.Quarto = {
 <p>eo3 &lt;- read.csv(‘/Users/veronicawood/School/GM Fall 2025 /STAT 515 - Applied Statistics and Visualization for Analytics/Final project/eo3.csv’)</p>
 <p>eo4 &lt;- read.csv(‘/Users/veronicawood/School/GM Fall 2025 /STAT 515 - Applied Statistics and Visualization for Analytics/Final project/eo4.csv’)</p>
 <p>library(dplyr)</p>
-</section>
-</section>
-<section id="we-first-combind-the-different-region" class="level1">
-<h1>We first combind the different region</h1>
 <p>big_df &lt;- bind_rows(eo.pr, eo.xx, eo1, eo2, eo3, eo4)</p>
 <p>tax.all &lt;- big_df %&gt;% filter(!is.na(INCOME_AMT), INCOME_AMT &gt; 0)</p>
 <p>states_50 &lt;- state.abb</p>
@@ -213,8 +191,6 @@ format = “%Y%m%d”)</p>
 <p>tax.all &lt;- tax.all %&gt;% filter(TaxDate &gt;= cutoff)</p>
 <p>table(floor(tax.all$TAX_PERIOD / 100))</p>
 <p>tax.2024 &lt;- tax.all %&gt;% filter(floor(TAX_PERIOD / 100) == 2024)</p>
-<section id="research-question-one" class="level2">
-<h2 class="anchored" data-anchor-id="research-question-one">Research Question One</h2>
 <p>tax.2024<span class="math inline">\(GroupStatus &lt;- ifelse(tax.2024\)</span>GROUP == 0, “Standalone”, “GroupAffiliated”) tax.2024<span class="math inline">\(GroupStatus &lt;- factor(tax.2024\)</span>GroupStatus)</p>
 <p>median_income_2024 &lt;- median(tax.2024$INCOME_AMT, na.rm = TRUE)</p>
 <p>tax.2024<span class="math inline">\(HighIncome &lt;- ifelse(tax.2024\)</span>INCOME_AMT &gt; median_income_2024, “High”, “Low”) tax.2024<span class="math inline">\(HighIncome &lt;- factor(tax.2024\)</span>HighIncome, levels = c(“Low”,“High”))</p>
@@ -230,7 +206,7 @@ format = “%Y%m%d”)</p>
 <p>tax.all &lt;- tax.all %&gt;% filter(TaxDate &gt;= cutoff)</p>
 <p>tax.2024 &lt;- tax.all %&gt;% filter(floor(TAX_PERIOD / 100) == 2024)</p>
 <p>tax.2024 &lt;- tax.2024 %&gt;% select(-STREET, -SORT_NAME, -ICO)</p>
-<p>tax.2024[tax.2024 == “”] &lt;- NA</p>
+<p>tax.2024[tax.2024 == ““] &lt;- NA</p>
 <p>tax.2024 &lt;- tax.2024 %&gt;% mutate( GroupStatus = ifelse(GROUP == 0, “Standalone”, “GroupAffiliated”), GroupStatus = factor(GroupStatus))</p>
 <p>median_income_2024 &lt;- median(tax.2024$INCOME_AMT, na.rm = TRUE)</p>
 <p>tax.2024 &lt;- tax.2024 %&gt;% mutate( HighIncome = ifelse(INCOME_AMT &gt; median_income_2024, “High”, “Low”), HighIncome = factor(HighIncome, levels = c(“Low”, “High”)))</p>
@@ -324,10 +300,6 @@ mean(pred_rf == test\)</span>HighIncome) # ≈ 0.98</p>
 <p>or_state &lt;- exp(coef(model_typical_ref)) or_state</p>
 <p>state_or_table &lt;- data.frame( STATE = names(or_state), OR = unname(or_state))</p>
 <p>head(state_or_table)</p>
-</section>
-</section>
-<section id="remove-invalid-or-non-mission-ntee-categories" class="level1">
-<h1>Remove invalid or non-mission NTEE categories</h1>
 <p>tax2_clean &lt;- tax2 %&gt;% filter(!NTEE_MAJOR %in% c(“0”, “c”, “Unknown”))</p>
 <p>ggplot(tax2_clean, aes(x = NTEE_MAJOR, y = ASSET_AMT)) + geom_violin(fill = “lightblue”, alpha = 0.6) + geom_boxplot(width = 0.2, outlier.size = 0.5) + scale_y_log10() + labs( title = “Asset Distributions Across NTEE Mission Categories”, y = “Assets (log scale)”, x = “NTEE Major Group” ) + theme_minimal(base_size = 14)</p>
 <p>ggplot(tax2_clean, aes(x = NTEE_MAJOR, y = INCOME_AMT)) + geom_violin(fill = “lightgreen”, alpha = 0.6) + geom_boxplot(width = 0.2, outlier.size = 0.5) + scale_y_log10() + labs( title = “Income Distributions Across NTEE Mission Categories”, y = “Income (log scale)”, x = “NTEE Major Group” ) + theme_minimal(base_size = 14)</p>
@@ -358,7 +330,6 @@ mean(pred_rf == test\)</span>HighIncome) # ≈ 0.98</p>
 <p>ggplot(accuracy_df, aes(x = Group, y = Accuracy, fill = Group)) + geom_col(width = 0.7, color = “black”) + geom_text(aes(label = sprintf(“%.3f”, Accuracy)), vjust = -0.5, size = 4) + scale_y_continuous(limits = c(0, 1)) + labs( title = “Model Accuracy Across Balanced Logistic Models”, x = “NTEE Group”, y = “Accuracy (0–1)” ) + theme_minimal() + theme(legend.position = “none”)</p>
 
 
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
