@@ -124,7 +124,8 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#abstract" id="toc-abstract" class="nav-link active" data-scroll-target="#abstract">Abstract</a></li>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction">Introduction</a></li>
   <li><a href="#methods" id="toc-methods" class="nav-link" data-scroll-target="#methods">Methods</a></li>
   <li><a href="#queation-1" id="toc-queation-1" class="nav-link" data-scroll-target="#queation-1">Queation 1</a></li>
   <li><a href="#queation-2" id="toc-queation-2" class="nav-link" data-scroll-target="#queation-2">Queation 2</a></li>
@@ -161,8 +162,9 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="abstract" class="level4">
-<h4 class="anchored" data-anchor-id="abstract">Abstract</h4>
+<section id="abstract" class="level3">
+<h3 class="anchored" data-anchor-id="abstract">Abstract</h3>
+<p>This study investigates how organizational characteristics and financial indicators relate to revenue outcomes and mission classification among U.S. nonprofits. Using the 2024 IRS Exempt Organizations Business Master File, we analyze over 360,000 tax-exempt organizations. Logistic regression, random forests, multinomial models, and exploratory data analysis reveal: (1) assets and revenue are the strongest predictors of high-income status; (2) state-level geography introduces significant but modest variation; (3) mission categories display distinct financial profiles; and (4) financial indicators offer moderate predictive power for foundation classification. Results highlight structural financial differences across the nonprofit sector and provide insight into the determinants of organizational scale and mission alignment.</p>
 </section>
 <section id="introduction" class="level3">
 <h3 class="anchored" data-anchor-id="introduction">Introduction</h3>
@@ -175,7 +177,9 @@ ul.task-list li input[type="checkbox"] {
 <h3 class="anchored" data-anchor-id="queation-1">Queation 1</h3>
 <section id="which-organizational-characteristics-most-strongly-predict-whether-a-nonprofit-is-high-income" class="level4">
 <h4 class="anchored" data-anchor-id="which-organizational-characteristics-most-strongly-predict-whether-a-nonprofit-is-high-income">Which organizational characteristics most strongly predict whether a nonprofit is high-Income?</h4>
-<p>First thing we do is clean the data set and determine which predictors are going to be used. We changed NTEE_code to NTEE_major to make it easier and set up the hypothesis. H₀: Organizational characteristics have no relationship with whether a nonprofit is High-Income. H₁: At least one organizational characteristic is associated with whether a nonprofit is High-Income. The Analysis of Deviance Table shows that ASSET_AMT and REVENUE_AMT are by far the strongest predictors, followed by the organization’s fiscal year-end month (ACCT_PD), NTEE_major, State and Group status. Group status was the only insignificant predictor. we used a generalized linear model with the. To test the accuracy of the model we set up a 80/20 train/test split which had a 0.97 accuracy.</p>
+<p>H₀₁: Organizational characteristics have no relationship with whether a nonprofit is High-Income.</p>
+<p>H₁₁: At least one organizational characteristic is associated with whether a nonprofit is High-Income.</p>
+<p>The Analysis of Deviance Table shows that ASSET_AMT and REVENUE_AMT are by far the strongest predictors, followed by the organization’s fiscal year-end month (ACCT_PD), NTEE_major, State and Group status. Group status was the only insignificant predictor. we used a generalized linear model with the. To test the accuracy of the model we set up a 80/20 train/test split which had a 0.97 accuracy.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="f2.png" class="img-fluid figure-img" width="700"></p>
@@ -194,7 +198,7 @@ ul.task-list li input[type="checkbox"] {
 </div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="RplotF6.jpeg" class="img-fluid figure-img" width="1200"></p>
+<p><img src="rf. variable imporance.png" class="img-fluid figure-img" width="1200"></p>
 <figcaption>Figure 3. Variable importance plot from the random forest model predicting foundation type.</figcaption>
 </figure>
 </div>
@@ -206,60 +210,91 @@ ul.task-list li input[type="checkbox"] {
 <h3 class="anchored" data-anchor-id="queation-2">Queation 2</h3>
 <section id="to-what-extent-does-geography-state-level-location-influence-whether-a-nonprofit-is-high-revenue" class="level4">
 <h4 class="anchored" data-anchor-id="to-what-extent-does-geography-state-level-location-influence-whether-a-nonprofit-is-high-revenue">To what extent does geography (state-level location) influence whether a nonprofit is high-revenue?</h4>
-<p>We used a Logistic Regression model with the state as the sole predictor to determine the direct influence of geography on the likelihood of a non-profit being high-revenue. We make a new column HighRevenue as a binary. We changed the reference state to MT as that was calculated to be the most even probability of being either high or low revenue and set up logistic regression. While financial metrics are the primary driver (as shown in Q1), geography does introduce statistically significant. The data suggests non-profits in the New England area (VT, ME, RI) have a clear advantage in terms of this classification compared to the reference state, while certain Mid-Atlantic or Southern states (NJ, SC) are at a slight disadvantage.</p>
+<p>H₀₂: State of registration has no effect on the odds that a nonprofit is high-revenue.</p>
+<p>H₁₂: State of registration does affect the odds that a nonprofit is high-revenue.</p>
+<p>We used a Logistic Regression model with the state as the sole predictor to determine the direct influence of geography on the likelihood of a non-profit being high-revenue. We make a new column High Revenue as a binary. We changed the reference state to MT as that was calculated to be the most even probability of being either high or low revenue and set up logistic regression. While financial metrics are the primary driver (as shown in Q1), geography does introduce statistically significant. The data suggests non-profits in the New England area (VT, ME, RI) have a clear advantage in terms of this classification compared to the reference state, while certain Mid-Atlantic or Southern states (NJ, SC) are at a slight disadvantage.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Q2.png" class="img-fluid figure-img" width="1200"></p>
+<figcaption>Figure 4.</figcaption>
+</figure>
+</div>
 </section>
 </section>
 <section id="queation-3" class="level3">
 <h3 class="anchored" data-anchor-id="queation-3">Queation 3</h3>
-<section id="how-do-key-financial-variables-assets-income-revenue-differ-across-nonprofit-mission-types-and-what-patterns-emerge-from-exploratory-data-analysis" class="level4">
-<h4 class="anchored" data-anchor-id="how-do-key-financial-variables-assets-income-revenue-differ-across-nonprofit-mission-types-and-what-patterns-emerge-from-exploratory-data-analysis">How do key financial variables (assets, income, revenue) differ across nonprofit mission types, and what patterns emerge from exploratory data analysis?</h4>
+<section id="to-what-extent-do-standardized-financial-indicators-predict-whether-an-organization-belongs-to-top-ntee-mission-categories" class="level4">
+<h4 class="anchored" data-anchor-id="to-what-extent-do-standardized-financial-indicators-predict-whether-an-organization-belongs-to-top-ntee-mission-categories">To what extent do standardized financial indicators predict whether an organization belongs to top NTEE mission categories?</h4>
+<p>H₀₃: Financial characteristics (assets, income, and revenue-to-income ratios) do not differ across NTEE major mission categories.</p>
+<p>H₁₃: At least one financial characteristic differs significantly across NTEE major mission categories.</p>
 <p>Across the mission types, both asset levels and income levels show substantial variation, with several categories displaying consistently higher medians and wider spreads. For example, groups in categories such as Education (B) and Health (E) tend to have noticeably larger asset bases and higher incomes compared to categories like Arts (A) or Youth (O), which have narrower distributions and lower medians. These patterns suggest that nonprofit sectors differ systematically in operational scale and financial capacity.</p>
 <p>We also examined the Revenue-to-Income ratio, a financial structure metric that indicates how closely an organization’s revenue aligns with reported income. Although most mission categories cluster around similar ratios, the spread within each category is large, reflecting diverse funding models and reporting practices even among similar mission types. Some categories show a heavier tail toward higher ratios, indicating subgroups of organizations with unusually strong revenue performance compared to income.</p>
 <p>Together, these EDA results demonstrate clear financial differences across mission types and provide important context for the modeling conducted in later sections. Understanding these baseline patterns is a key step in exploratory analytics and helps justify the inclusion of financial variables in predictive models used in Research Questions 2–4.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="ntee.jpeg" class="img-fluid figure-img" width="800"></p>
-<figcaption>Figure 1. Distribution of Revenue-to-Income ratios across NTEE mission categories on a log scale.</figcaption>
-</figure>
-</div>
-<p><br></p>
+<p><img src="NTEE by Major Code .png" class="img-fluid" width="800" alt="Figure 5. Log-scaled violin and boxplots showing the distribution of total assets for nonprofits across NTEE mission categories."> <br></p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="Asset ntee.jpeg" class="img-fluid figure-img" width="800"></p>
-<figcaption>Figure 2. Log-scaled violin and boxplots showing the distribution of total assets for nonprofits across NTEE mission categories.</figcaption>
+<figcaption>Figure 6. Log-scaled violin and boxplots showing the distribution of total assets for nonprofits across NTEE mission categories.</figcaption>
 </figure>
 </div>
 <p><br></p>
-<p><img src="NTEE mission.jpeg" class="img-fluid" alt="Figure 3. Log-scaled income distributions for nonprofits by NTEE mission category.">{width=800</p>
-<p><br></p>
-</section>
-</section>
-<section id="queation-4" class="level2">
-<h2 class="anchored" data-anchor-id="queation-4">Queation 4</h2>
-<section id="to-what-extent-do-standardized-financial-indicators-predict-whether-an-organization-belongs-to-top-ntee-mission-categories" class="level4">
-<h4 class="anchored" data-anchor-id="to-what-extent-do-standardized-financial-indicators-predict-whether-an-organization-belongs-to-top-ntee-mission-categories">To what extent do standardized financial indicators predict whether an organization belongs to top NTEE mission categories?</h4>
-<p>To evaluate whether financial characteristics are predictive of mission type, we fit binary logistic regression models for five of the most common NTEE major groups (A, B, P, N, X). All financial variables were standardized prior to modeling to improve interpretability and model stability. Odds ratios and 95% confidence intervals were computed for each predictor to assess the direction and magnitude of associations.</p>
-<p>Because the distribution of NTEE classes is highly imbalanced, we also implemented oversampling (caret::upSample) to create balanced datasets and re-fit each logistic model. This step allows us to compare performance under equal class representation and reduces bias in predictive accuracy. Model accuracy was evaluated using confusion matrices applied to the balanced samples.</p>
-<p>The logistic regression models show that financial variables have statistically meaningful associations with mission type, although the magnitude and direction of effects differ across categories. Standardized income and revenue are strong positive predictors for several mission groups—particularly Education (B) and Human Services (P)—indicating that these sectors tend to include organizations with larger operational scale. The revenue-to-income ratio is also influential in multiple models, suggesting that financial structure, not just size, is tied to mission classification.</p>
-<p>After correcting for class imbalance with oversampling, model accuracy ranges between approximately 70% and 90%, depending on the category. This indicates that financial characteristics alone provide moderate discriminatory power but do not fully explain mission classification, which is expected because mission type reflects organizational purpose rather than purely financial attributes.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="Odds Ratios for Financial Predictors Across Top NTEE Groups.jpeg" class="img-fluid figure-img" width="1200"></p>
-<figcaption>Figure 4. Odds ratios and 95% confidence intervals for standardized financial predictors across five NTEE mission categories.</figcaption>
+<p><img src="NTEE mission.jpeg" class="img-fluid figure-img" width="800"></p>
+<figcaption>Figure 7. Log-scaled income distributions for nonprofits by NTEE mission category.</figcaption>
+</figure>
+</div>
+<p><br></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="ntee.jpeg" class="img-fluid figure-img" width="800"></p>
+<figcaption>Figure 8. Distribution of Revenue-to-Income ratios across NTEE mission categories on a log scale.</figcaption>
+</figure>
+</div>
+<p><br></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Odds Ratios for Financial Predictors Across Top NTEE Groups.jpeg" class="img-fluid figure-img" width="1500"></p>
+<figcaption>Figure 9. Odds ratios and 95% confidence intervals for standardized financial predictors across five NTEE mission categories.</figcaption>
 </figure>
 </div>
 <p><br></p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="Model Accuracy Top five.jpeg" class="img-fluid figure-img" width="1200"></p>
-<figcaption>Figure 5. Accuracy of logistic regression models for predicting mission type after applying oversampling.</figcaption>
+<figcaption>Figure 10. Accuracy of logistic regression models for predicting mission type after applying oversampling.</figcaption>
+</figure>
+</div>
+</section>
+</section>
+<section id="queation-4" class="level2">
+<h2 class="anchored" data-anchor-id="queation-4">Queation 4</h2>
+<section id="to-what-extent-do-financial-indicators-predict-foundation-classification-type" class="level4">
+<h4 class="anchored" data-anchor-id="to-what-extent-do-financial-indicators-predict-foundation-classification-type">To what extent do financial indicators predict foundation classification type?</h4>
+<p>H₀₄: Financial indicators (assets, income, liquidity, revenue dependence, revenue-to-income ratio) do not predict foundation type.</p>
+<p>H₁₄: At least one financial indicator significantly predicts foundation type.</p>
+<p>To evaluate whether financial characteristics are predictive of mission type, we fit binary logistic regression models for five of the most common NTEE major groups (A, B, P, N, X). All financial variables were standardized prior to modeling to improve interpretability and model stability. Odds ratios and 95% confidence intervals were computed for each predictor to assess the direction and magnitude of associations.</p>
+<p>Because the distribution of NTEE classes is highly imbalanced, we also implemented oversampling (caret::upSample) to create balanced datasets and re-fit each logistic model. This step allows us to compare performance under equal class representation and reduces bias in predictive accuracy. Model accuracy was evaluated using confusion matrices applied to the balanced samples.</p>
+<p>The logistic regression models show that financial variables have statistically meaningful associations with mission type, although the magnitude and direction of effects differ across categories. Standardized income and revenue are strong positive predictors for several mission groups—particularly Education (B) and Human Services (P)—indicating that these sectors tend to include organizations with larger operational scale. The revenue-to-income ratio is also influential in multiple models, suggesting that financial structure, not just size, is tied to mission classification.</p>
+<p>After correcting for class imbalance with oversampling, model accuracy ranges between approximately 70% and 90%, depending on the category. This indicates that financial characteristics alone provide moderate discriminatory power but do not fully explain mission classification, which is expected because mission type reflects organizational purpose rather than purely financial attributes.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Rplot.2.jpeg" class="img-fluid figure-img" width="1200"></p>
+<figcaption>Figure 11. Variable importance plot from the random forest model predicting foundation type.</figcaption>
+</figure>
+</div>
+<p><br></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Odds Ratios (log scale) Predicting High Revenue.jpeg" class="img-fluid figure-img" width="1200"></p>
+<figcaption>Figure 12. Variable importance plot from the random forest model predicting foundation type.</figcaption>
 </figure>
 </div>
 <p><br></p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="RplotF6.jpeg" class="img-fluid figure-img" width="1200"></p>
-<figcaption>Figure 6. Variable importance plot from the random forest model predicting foundation type.</figcaption>
+<figcaption>Figure 13. Variable importance plot from the random forest model predicting foundation type.</figcaption>
 </figure>
 </div>
 </section>
