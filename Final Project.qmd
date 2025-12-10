@@ -135,15 +135,49 @@ REVENUE_AMT 409.832341 449.456928           447.314524      79929.70270
 #![Figure 10. State-level odds ratios for high revenue compared to the reference state (IL).](Odds Ratios for Financial Predictors Across Top NTEE Groups.jpeg){width=1200}
 
 <br>
+## Queation 5
 
-#![Coeff](NTEE_Logistic_Results.png){width=700}
+#### To what extent does geography (state-level location) influence whether a nonprofit is high-revenue?
+We used a Logistic Regression model with the state as the sole predictor to determine the direct influence of geography on the likelihood of a non-profit being high-revenue. We make a new column HighRevenue as a binary. We changed the reference state to MT as that was calculated to be the most even probability of being either high or low revenue and set up logistic regression. While financial metrics are the primary driver (as shown in Q1), geography does introduce statistically significant. The data suggests non-profits in the New England area (VT, ME, RI) have a clear advantage in terms of this classification compared to the reference state, while certain Mid-Atlantic or Southern states (NJ, SC) are at a slight disadvantage.
+
+[1] "MT"
+(Intercept)     STATEAK     STATEAL     STATEAR     STATEAZ     STATECA 
+  1.0000000   1.1601831   0.9847654   0.9417773   1.1809278   0.9770317 
+    STATECO     STATECT     STATEDE     STATEFL     STATEGA     STATEHI 
+  1.1674272   1.1412791   1.1527778   0.9260783   0.9265980   1.1008264 
+    STATEIA     STATEID     STATEIL     STATEIN     STATEKS     STATEKY 
+  0.9747706   0.8896648   0.9612230   1.0034065   0.9854577   1.0102459 
+    STATELA     STATEMA     STATEMD     STATEME     STATEMI     STATEMN 
+  1.0071788   0.8937000   1.0523446   1.3746594   1.0469836   1.0531118 
+    STATEMO     STATEMS     STATENC     STATEND     STATENE     STATENH 
+  1.1114565   0.8766667   1.2274168   1.2345972   1.0729167   0.9372973 
+    STATENJ     STATENM     STATENV     STATENY     STATEOH     STATEOK 
+  0.6850978   1.1361816   0.8950472   1.0043860   0.9090722   0.9828259 
+    STATEOR     STATEPA     STATERI     STATESC     STATESD     STATETN 
+  1.0402178   1.1071368   1.2363281   0.8362709   1.0404624   1.0781722 
+    STATETX     STATEUT     STATEVA     STATEVT     STATEWA     STATEWI 
+  0.9223468   1.1137931   1.0774318   1.5504949   1.0445398   0.9423005 
+    STATEWV     STATEWY 
+  1.0443213   1.1717452 
+
+
+
 
 ## Results & Findings 
 
 ## Discussion
+This study examined whether financial characteristics—assets, income, revenue, and revenue-to-income ratios—help distinguish the largest nonprofit mission groups in the NTEE system. Across the five logistic models, financial indicators showed clear and interpretable differences between sectors. As shown in Table 2 and visualized in Figures 1 and 2, each mission type displays a distinct financial pattern.
 
+Assets played a central role for several groups. Education and Arts organizations were more likely to have higher asset levels, suggesting reliance on endowments or long-term capital investments. In contrast, Human Services and Youth nonprofits tended to operate with fewer fixed resources, reflecting their focus on direct service delivery and short-term funding cycles.
+
+Income was especially important for Youth Development and Religion Support organizations. These groups appear to depend more on continuous financial inflows (such as donations or program fees), rather than accumulated assets. Meanwhile, the revenue-to-income ratio strongly distinguished Human Services and Religion Support groups, indicating differences in funding structures or operational efficiency.
+
+While revenue alone was not a strong predictor for most groups—likely due to its wide skew—its standardized form still helped reveal overall financial tendencies. Together, these results show that nonprofit mission categories align with meaningful financial signatures rather than arbitrary labels.
 
 ## Conclusion
+Overall, the findings indicate that nonprofit mission type can be partially explained by basic financial characteristics. Assets, income, and revenue-to-income ratios consistently differentiated the five largest NTEE groups, demonstrating that financial structure varies systematically across sectors. Education and Arts organizations tend to hold more assets, while Youth and Religion Support organizations rely more on income. Human Services groups show distinctive revenue-to-income behavior, highlighting the financial pressures of service-oriented work.
+
+Although financial data do not capture the full complexity of nonprofit missions, these patterns show that mission type is closely tied to how organizations raise, manage, and rely on financial resources. Future work could expand the analysis by incorporating multi-year financial trends or geographic differences, but the present results already demonstrate that financial indicators offer meaningful insight into the nonprofit landscape.
 
 ## Future Scope 
 <br>
