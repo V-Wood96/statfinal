@@ -126,13 +126,13 @@ ul.task-list li input[type="checkbox"] {
   <ul>
   <li><a href="#abstract" id="toc-abstract" class="nav-link active" data-scroll-target="#abstract">Abstract</a></li>
   <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction">Introduction</a></li>
-  <li><a href="#methods-analytic" id="toc-methods-analytic" class="nav-link" data-scroll-target="#methods-analytic">Methods &amp; Analytic</a></li>
+  <li><a href="#methods-analytic-strategy" id="toc-methods-analytic-strategy" class="nav-link" data-scroll-target="#methods-analytic-strategy">Methods &amp; Analytic Strategy</a></li>
   <li><a href="#hypotheses" id="toc-hypotheses" class="nav-link" data-scroll-target="#hypotheses">Hypotheses</a></li>
   <li><a href="#queation-1" id="toc-queation-1" class="nav-link" data-scroll-target="#queation-1">Queation 1</a></li>
   <li><a href="#queation-2" id="toc-queation-2" class="nav-link" data-scroll-target="#queation-2">Queation 2</a></li>
   <li><a href="#queation-3" id="toc-queation-3" class="nav-link" data-scroll-target="#queation-3">Queation 3</a></li>
   <li><a href="#queation-4" id="toc-queation-4" class="nav-link" data-scroll-target="#queation-4">Queation 4</a></li>
-  <li><a href="#results-findings" id="toc-results-findings" class="nav-link" data-scroll-target="#results-findings">Results &amp; Findings</a></li>
+  <li><a href="#results-key-findings" id="toc-results-key-findings" class="nav-link" data-scroll-target="#results-key-findings">Results &amp; Key Findings</a></li>
   <li><a href="#discussion" id="toc-discussion" class="nav-link" data-scroll-target="#discussion">Discussion</a></li>
   <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
   <li><a href="#future-scope" id="toc-future-scope" class="nav-link" data-scroll-target="#future-scope">Future Scope</a></li>
@@ -167,8 +167,8 @@ ul.task-list li input[type="checkbox"] {
 <section id="introduction" class="level2">
 <h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
 </section>
-<section id="methods-analytic" class="level2">
-<h2 class="anchored" data-anchor-id="methods-analytic">Methods &amp; Analytic</h2>
+<section id="methods-analytic-strategy" class="level2">
+<h2 class="anchored" data-anchor-id="methods-analytic-strategy">Methods &amp; Analytic Strategy</h2>
 </section>
 <section id="hypotheses" class="level2">
 <h2 class="anchored" data-anchor-id="hypotheses">Hypotheses</h2>
@@ -187,15 +187,18 @@ ul.task-list li input[type="checkbox"] {
 <figcaption>Figure 1. Distribution of Revenue-to-Income ratios across NTEE mission categories on a log scale.</figcaption>
 </figure>
 </div>
-<p><br></p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="Asset ntee.jpeg" class="img-fluid figure-img" width="800"></p>
 <figcaption>Figure 2. Log-scaled violin and boxplots showing the distribution of total assets for nonprofits across NTEE mission categories.</figcaption>
 </figure>
 </div>
-<p><br></p>
-<p><img src="NTEE mission.jpeg" class="img-fluid" alt="Figure 3. Log-scaled income distributions for nonprofits by NTEE mission category.">{width=800</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="NTEE mission.jpeg" class="img-fluid figure-img" width="800"></p>
+<figcaption>Figure 3. Log-scaled income distributions for nonprofits by NTEE mission category.</figcaption>
+</figure>
+</div>
 <p><br></p>
 </section>
 </section>
@@ -203,22 +206,6 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="queation-2">Queation 2</h2>
 <section id="to-what-extent-do-standardized-financial-indicators-predict-whether-an-organization-belongs-to-top-ntee-mission-categories" class="level4">
 <h4 class="anchored" data-anchor-id="to-what-extent-do-standardized-financial-indicators-predict-whether-an-organization-belongs-to-top-ntee-mission-categories">To what extent do standardized financial indicators predict whether an organization belongs to top NTEE mission categories?</h4>
-<p>To evaluate whether financial characteristics are predictive of mission type, we fit binary logistic regression models for five of the most common NTEE major groups (A, B, P, N, X). All financial variables were standardized prior to modeling to improve interpretability and model stability. Odds ratios and 95% confidence intervals were computed for each predictor to assess the direction and magnitude of associations.</p>
-<p>Because the distribution of NTEE classes is highly imbalanced, we also implemented oversampling (caret::upSample) to create balanced datasets and re-fit each logistic model. This step allows us to compare performance under equal class representation and reduces bias in predictive accuracy. Model accuracy was evaluated using confusion matrices applied to the balanced samples.</p>
-<p>The logistic regression models show that financial variables have statistically meaningful associations with mission type, although the magnitude and direction of effects differ across categories. Standardized income and revenue are strong positive predictors for several mission groups—particularly Education (B) and Human Services (P)—indicating that these sectors tend to include organizations with larger operational scale. The revenue-to-income ratio is also influential in multiple models, suggesting that financial structure, not just size, is tied to mission classification.</p>
-<p>After correcting for class imbalance with oversampling, model accuracy ranges between approximately 70% and 90%, depending on the category. This indicates that financial characteristics alone provide moderate discriminatory power but do not fully explain mission classification, which is expected because mission type reflects organizational purpose rather than purely financial attributes.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="Odds Ratios for Financial Predictors Across Top NTEE Groups.jpeg" class="img-fluid figure-img" width="1200"></p>
-<figcaption>Figure 4. Odds ratios and 95% confidence intervals for standardized financial predictors across five NTEE mission categories.</figcaption>
-</figure>
-</div>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="Model Accuracy Top five.jpeg" class="img-fluid figure-img" width="1200"></p>
-<figcaption>Figure 5. Accuracy of logistic regression models for predicting mission type after applying oversampling.</figcaption>
-</figure>
-</div>
 </section>
 </section>
 <section id="queation-3" class="level2">
@@ -233,8 +220,8 @@ ul.task-list li input[type="checkbox"] {
 <h4 class="anchored" data-anchor-id="which-organizational-characteristics-best-predict-whether-a-nonprofit-earns-high-revenue">Which organizational characteristics best predict whether a nonprofit earns high revenue?</h4>
 </section>
 </section>
-<section id="results-findings" class="level2">
-<h2 class="anchored" data-anchor-id="results-findings">Results &amp; Findings</h2>
+<section id="results-key-findings" class="level2">
+<h2 class="anchored" data-anchor-id="results-key-findings">Results &amp; Key Findings</h2>
 <p><br></p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">

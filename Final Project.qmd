@@ -6,6 +6,8 @@ editor: visual
 ## Abstract
 
 ## Introduction 
+Tax-exempt organizations are organization that receive federal tax benefits in exchange for providing public services such as charity, education, and healthcare. This study examines how organizational classification and financial characteristics influence revenue, income, and assets among U.S. nonprofit organizations. Data were obtained from the IRS Exempt Organizations Business Master File. Descriptive and regression analyses were conducted to examine patterns in revenue and to identify predictors of high organizational income
+
 
 ## Methods & Analytic 
 
@@ -70,41 +72,71 @@ The decision tree provides a simple visual summary of how financial thresholds s
 
 Overall, the results show that financial characteristics contribute meaningfully to foundation classification, though they are not the sole determinants.
 
-![Figure 6. Variable importance plot from the random forest model predicting foundation type.](Model Accuracy Top five.jpeg){width=1200} 
+![Figure 6. Variable importance plot from the random forest model predicting foundation type.](RplotF6){width=1200} 
 
-![Figure 7. Decision tree illustrating a simplified financial pathway to predicting foundation classification.](Model Accuracy Top five.jpeg){width=1200} 
 
 ## Queation 4
 
 #### Which organizational characteristics best predict whether a nonprofit earns high revenue?
 
-The logistic regression model shows that financial structure strongly predicts whether an organization has high revenue. Higher revenue dependence, higher liquidity, and lower asset-to-income ratios significantly increase the odds of belonging to the high-revenue group. Several foundation types also exhibit meaningful differences, indicating that organizational structure influences revenue-generating patterns.
+First thing we do is clean the data set and determine which predictors are going to be used. We changed NTEE_code to NTEE_major to make it easier and set up the hypothesis.
+H₀: Organizational characteristics have no relationship with whether a nonprofit is High-Income.
+H₁: At least one organizational characteristic is associated with whether a nonprofit is High-Income. The Analysis of Deviance Table shows that ASSET_AMT and REVENUE_AMT are by far the strongest predictors, followed by the organization’s fiscal year-end month (ACCT_PD), NTEE_major, State and Group status. Group status was the only insignificant predictor. we used a generalized linear model with the. To test the accuracy of the model we set up a 80/20 train/test split which had a 0.97 accuracy.
 
-The random forest model achieved excellent predictive accuracy (~97%), confirming that financial scale variables such as revenue and assets dominate in classification. Variable importance results highlight revenue amount as the single strongest predictor, followed by assets, accounting period, and mission type.
+Analysis of Deviance Table
 
-The state effects model shows that location also has a significant influence on revenue levels. Some states have odds of high revenue 15–30% above or below the national norm, even after controlling for financial features. This suggests structural or policy differences in regional nonprofit ecosystems.
+Model: binomial, link: logit
 
-Together, these results demonstrate that both financial characteristics and geographic context play important roles in predicting high-revenue organizations.
+Response: HighIncome
+
+Terms added sequentially (first to last)
+
+            Df Deviance Resid. Df Resid. Dev Pr(>Chi)    
+NULL                       267169     370300             
+NTEE_major  27     9068    267142     361232   <2e-16 ***
+GroupStatus  1        2    267141     361231   0.1978    
+STATE       49      857    267092     360374   <2e-16 ***
+ACCT_PD      1    18175    267091     342199   <2e-16 ***
+ASSET_AMT    1    85183    267090     257015   <2e-16 ***
+REVENUE_AMT  1   206144    267089      50871   <2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+      
+pred     Low  High
+  High   413 26207
+  Low  25915   899
+[1] 0.9754463
+Random forest
+As a comparison we set up random forest model to also test the predictive strength. The results were nearly the same. We also tested the results with Variable importance. As previously established Asset and revenue are the strongest predictors. So we reject the Null hypothesis.
+
+       
+pred_rf   Low  High
+   Low  26294  1019
+   High    34 26087
+[1] 0.9802934
+                   Low       High MeanDecreaseAccuracy MeanDecreaseGini
+NTEE_major   15.792944   7.441951            15.352650        942.06111
+GroupStatus   1.583322  11.555183             7.171355         64.50143
+STATE         1.714387   7.671794             4.967953        970.27806
+ACCT_PD      24.847531   3.598103            18.267817       2788.23862
+ASSET_AMT    45.826334   7.146857            39.753056      20270.54802
+REVENUE_AMT 409.832341 449.456928           447.314524      79929.70270
 
 
 
-
-![Figure 8. Predicted probability of high revenue across foundation types, holding financial ratios constant at their mean values.](Model Accuracy Top five.jpeg){width=1200} 
-
+#![Figure 8. Predicted probability of high revenue across foundation types, holding financial ratios constant at their mean values.](RplotF6.jpeg){width=1200} 
 
 <br>
 
-![Figure 9. Variable importance plot from the random forest model predicting high revenue.](Model Accuracy Top five.jpeg){width=1200} 
-
+#![Figure 9. .](RplotF8.jpeg){width=1200} 
 
 <br>
 
-![Figure 10. State-level odds ratios for high revenue compared to the reference state (IL).](Odds Ratios for Financial Predictors Across Top NTEE Groups.jpeg){width=1200}
+#![Figure 10. State-level odds ratios for high revenue compared to the reference state (IL).](Odds Ratios for Financial Predictors Across Top NTEE Groups.jpeg){width=1200}
 
+<br>
 
-
-
-![Coeff](NTEE_Logistic_Results.png){width=700}
+#![Coeff](NTEE_Logistic_Results.png){width=700}
 
 ## Results & Findings 
 
