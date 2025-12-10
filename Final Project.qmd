@@ -63,7 +63,7 @@ These exploratory patterns demonstrate clear differences across mission categori
 
 To further examine these relationships, logistic models were fit for the five largest NTEE groups using standardized financial variables. Odds ratios and confidence intervals highlight consistent and interpretable financial distinctions among mission categories. Accuracy results after oversampling show moderate predictive performance across groups.
 
-![Figure 5. Log-scaled violin and boxplots showing the distribution of total assets for nonprofits across NTEE mission categories.](NTEE by Major Code .png){width="800"}
+![Figure 5. Count of NTEE mission categories.](NTEE by Major Code .png){width="800"}
 <br>
 
 ![Figure 6. Log-scaled violin and boxplots showing the distribution of total assets for nonprofits across NTEE mission categories.](Asset%20ntee.jpeg){width="800"}
