@@ -84,6 +84,10 @@ To further examine these relationships, logistic models were fit for the five la
 
 ![Figure 10. Accuracy of logistic regression models for predicting mission type after applying oversampling.](Model%20Accuracy%20Top%20five.jpeg){width="1200"}
 
+![Figure 11. NTEE Logistic regression coefficients.](NTEE_Logistic_Results.png){width="1200"}
+
+![Figure 12. Odds Ratios and 95% Confidence Intervals Across NTEE Groups.](ntee_results_table.png){width="1200"}
+
 ## Question 4
 #### To what extent do financial indicators predict foundation classification type?
 H₀₄: Financial indicators (assets, income, liquidity, revenue dependence, revenue-to-income ratio) do not predict foundation type.
@@ -99,15 +103,15 @@ An additional logistic regression model examining high revenue outcomes demonstr
 Random forest variable importance measures confirm the predictive roles of liquidity, revenue dependence, asset-to-income ratios, and other financial structure metrics. These measures appear more influential than raw financial size indicators, suggesting that foundation type is closely tied to patterns of financial management rather than total financial magnitude.
 
 
-![Figure 11. Variable importance plot from the random forest model predicting foundation type.](Rplot.2.jpeg){width="1200"}
+![Figure 13. Predicted Probability of High Revenue by Foundation Type.](Rplot.2.jpeg){width="1200"}
 
 <br> 
 
-![Figure 12. Variable importance plot from the random forest model predicting foundation type.](Odds Ratios (log scale) Predicting High Revenue.jpeg){width="1200"}
+![Figure 14. Odd Ratios Predicting High Revenue.](Odds Ratios (log scale) Predicting High Revenue.jpeg){width="1200"}
 
 <br> 
 
-![Figure 13. Variable importance plot from the random forest model predicting foundation type.](RplotF6.jpeg){width="1200"}
+![Figure 15. Variable importance plot from the random forest model predicting foundation type.](RplotF6.jpeg){width="1200"}
 
 
 ### Results and Discussion

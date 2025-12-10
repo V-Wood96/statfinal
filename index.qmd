@@ -21,7 +21,7 @@ I am Anand Boldbaatar a masters student at George Mason university, majoring In 
 ![Veronica Wood](images_headshot.png){width=400}
 
 
-My name is Veronica Wood. I earned a B.S. in Business Management from Virginia Commonwealth University (VCU) in 2019, and I’m excited to learn more with a MS in Data Analytics Engineering program.
+My name is Veronica Wood. I earned a B.S. in Business Management from Virginia Commonwealth University in 2019, and I’m excited to learn more with a MS in Data Analytics Engineering program.
 
 I have always been interested by the stories that data can tell and how those insights can drive meaningful improvement. My interest grew further during my role as a Budget Analyst for the Department of Defense, where I provide analysis across multiple financial portfolios.
 
