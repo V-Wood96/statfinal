@@ -7,7 +7,7 @@ website:
   navbar:
     right:
       - href: index.qmd
-        text: ABOUT US
+        text: ABOUT GROUP TWO
       - data.qmd
       - Final Project.qmd
       - references.qmd

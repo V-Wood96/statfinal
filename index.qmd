@@ -1,22 +1,31 @@
 ---
 title: "GROUP TWO"
-subtitle: "Applied Statistics and Visualization for Analytics Final Project"
+subtitle: "Financial and Organizational Predictors of Revenue, Income, and Mission Classification in U.S. Nonprofit Organizations"
 about: 
   template: marquee
 ---
- 
-#### Welcome and thanks for taking the time to check out our STATs final. During this project, we investigate financial predictors of U.S. tax-exempt organizations. Below is some additional information about the two members of Group Two. We hope you enjoy reading!
 
 
-### Anand Boldbaatar
 
-![Anand Boldbaatar](Profile.png){width=200}
+### Abstract 
+
+This study investigates how organizational characteristics and financial indicators relate to revenue outcomes and mission classification among U.S. nonprofits. Using the 2024 IRS Exempt Organizations Business Master File, we analyze over 360,000 tax-exempt organizations. Logistic regression, random forests, multinomial models, and exploratory data analysis reveal: (1) assets and revenue are the strongest predictors of high-income status; (2) state-level geography introduces significant but modest variation; (3) mission categories display distinct financial profiles; and (4) financial indicators offer moderate predictive power for foundation classification. Results highlight structural financial differences across the nonprofit sector and provide insight into the determinants of organizational scale and mission alignment.
+
+
+### About Us 
+
+Welcome and thanks for taking the time to check out our Applied Statistics and Visualization for Analytics final project. During this project, we investigate financial predictors of U.S. tax-exempt organizations. Below is some additional information about the two members of Group Two. We hope you enjoy reading!
+
+
+#### Anand Boldbaatar
+
+![Anand Boldbaatar](Profile.png){width=400}
 
 I am Anand Boldbaatar a masters student at George Mason university, majoring In Applied data analytics. My undergrad was in IT (Database and programming)
 
-### Veronica Wood
+#### Veronica Wood
 
-![Veronica Wood](images_headshot.png){width=200}
+![Veronica Wood](images_headshot.png){width=400}
 
 
 My name is Veronica Wood. I earned a B.S. in Business Management from Virginia Commonwealth University (VCU) in 2019, and I’m excited to learn more with a MS in Data Analytics Engineering program.

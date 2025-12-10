@@ -7,7 +7,6 @@ editor: visual
 # About the Data
 
 
-
 ##### Internal Revenue Service (IRS) Exempt Organizations Division: Factors and variables that influence revenue and income in specific regions.
 
 ## Abstract

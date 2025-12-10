@@ -1,24 +1,33 @@
 ---
-title: "ABOUT US"
+title: "ABOUT"
 editor: visual
 subtitle: "Applied Statistics and Visualization for Analytics Final Project"
 about: 
   template: marquee
 ---
 
+
+#### Title: Financial and Organizational Predictors of Revenue, Income, and Mission Classification in U.S. Nonprofit Organizations
+
+##### Project Abstract 
+
+This study investigates how organizational characteristics and financial indicators relate to revenue outcomes and mission classification among U.S. nonprofits. Using the 2024 IRS Exempt Organizations Business Master File, we analyze over 360,000 tax-exempt organizations. Logistic regression, random forests, multinomial models, and exploratory data analysis reveal: (1) assets and revenue are the strongest predictors of high-income status; (2) state-level geography introduces significant but modest variation; (3) mission categories display distinct financial profiles; and (4) financial indicators offer moderate predictive power for foundation classification. Results highlight structural financial differences across the nonprofit sector and provide insight into the determinants of organizational scale and mission alignment.
+
+
+##### About Us 
+
 ### Anand Boldbaatar
 
-![Anand Boldbaatar](Profile.png){width=200}
+![Anand Boldbaatar](Profile.png){width="200"}
 
 I am Anand Boldbaatar a masters student at George Mason university, majoring In Applied data analytics. My undergrad was in IT (Database and programming)
 
 ### Veronica Wood
 
-![Veronica Wood](images_headshot.png){width=200}
+![Veronica Wood](images_headshot.png){width="200"}
 
 My name is Veronica Wood. I earned a B.S. in Business Management from Virginia Commonwealth University (VCU) in 2019, and I’m excited to learn more with a MS in Data Analytics Engineering program.
 
 I have always been interested by the stories that data can tell and how those insights can drive meaningful improvement. My interest grew further during my role as a Budget Analyst for the Department of Defense, where I provide analysis across multiple financial portfolios.
 
 I believe that pursuing the MS DAEN degree will provide me with a more well-rounded foundation in data analysis and position me for continued growth in the field.
-

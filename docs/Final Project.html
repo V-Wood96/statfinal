@@ -90,7 +90,7 @@ ul.task-list li input[type="checkbox"] {
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
     <a class="nav-link" href="./index.html"> 
-<span class="menu-text">ABOUT US</span></a>
+<span class="menu-text">ABOUT GROUP TWO</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./data.html"> 
@@ -124,17 +124,18 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#abstract" id="toc-abstract" class="nav-link active" data-scroll-target="#abstract">Abstract</a></li>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction">Introduction</a></li>
-  <li><a href="#methods-analytic" id="toc-methods-analytic" class="nav-link" data-scroll-target="#methods-analytic">Methods &amp; Analytic</a></li>
-  <li><a href="#hypotheses" id="toc-hypotheses" class="nav-link" data-scroll-target="#hypotheses">Hypotheses</a></li>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#methods" id="toc-methods" class="nav-link" data-scroll-target="#methods">Methods</a></li>
   <li><a href="#queation-1" id="toc-queation-1" class="nav-link" data-scroll-target="#queation-1">Queation 1</a></li>
   <li><a href="#queation-2" id="toc-queation-2" class="nav-link" data-scroll-target="#queation-2">Queation 2</a></li>
-  <li><a href="#queation-4" id="toc-queation-4" class="nav-link" data-scroll-target="#queation-4">Queation 4</a></li>
+  <li><a href="#queation-3" id="toc-queation-3" class="nav-link" data-scroll-target="#queation-3">Queation 3</a></li>
+  <li><a href="#queation-4" id="toc-queation-4" class="nav-link" data-scroll-target="#queation-4">Queation 4</a>
+  <ul class="collapse">
   <li><a href="#results-findings" id="toc-results-findings" class="nav-link" data-scroll-target="#results-findings">Results &amp; Findings</a></li>
   <li><a href="#discussion" id="toc-discussion" class="nav-link" data-scroll-target="#discussion">Discussion</a></li>
   <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
   <li><a href="#future-scope" id="toc-future-scope" class="nav-link" data-scroll-target="#future-scope">Future Scope</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -160,24 +161,58 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="abstract" class="level2">
-<h2 class="anchored" data-anchor-id="abstract">Abstract</h2>
+<section id="abstract" class="level4">
+<h4 class="anchored" data-anchor-id="abstract">Abstract</h4>
 </section>
-<section id="introduction" class="level2">
-<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<section id="introduction" class="level3">
+<h3 class="anchored" data-anchor-id="introduction">Introduction</h3>
 <p>Tax-exempt organizations are organization that receive federal tax benefits in exchange for providing public services such as charity, education, and healthcare. This study examines how organizational classification and financial characteristics influence revenue, income, and assets among U.S. nonprofit organizations. Data were obtained from the IRS Exempt Organizations Business Master File. Descriptive and regression analyses were conducted to examine patterns in revenue and to identify predictors of high organizational income</p>
 </section>
-<section id="methods-analytic" class="level2">
-<h2 class="anchored" data-anchor-id="methods-analytic">Methods &amp; Analytic</h2>
+<section id="methods" class="level3">
+<h3 class="anchored" data-anchor-id="methods">Methods</h3>
 </section>
-<section id="hypotheses" class="level2">
-<h2 class="anchored" data-anchor-id="hypotheses">Hypotheses</h2>
+<section id="queation-1" class="level3">
+<h3 class="anchored" data-anchor-id="queation-1">Queation 1</h3>
+<section id="which-organizational-characteristics-most-strongly-predict-whether-a-nonprofit-is-high-income" class="level4">
+<h4 class="anchored" data-anchor-id="which-organizational-characteristics-most-strongly-predict-whether-a-nonprofit-is-high-income">Which organizational characteristics most strongly predict whether a nonprofit is high-Income?</h4>
+<p>First thing we do is clean the data set and determine which predictors are going to be used. We changed NTEE_code to NTEE_major to make it easier and set up the hypothesis. H₀: Organizational characteristics have no relationship with whether a nonprofit is High-Income. H₁: At least one organizational characteristic is associated with whether a nonprofit is High-Income. The Analysis of Deviance Table shows that ASSET_AMT and REVENUE_AMT are by far the strongest predictors, followed by the organization’s fiscal year-end month (ACCT_PD), NTEE_major, State and Group status. Group status was the only insignificant predictor. we used a generalized linear model with the. To test the accuracy of the model we set up a 80/20 train/test split which had a 0.97 accuracy.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="f2.png" class="img-fluid figure-img" width="700"></p>
+<figcaption>Figure 1.</figcaption>
+</figure>
+</div>
+<section id="random-forest" class="level5">
+<h5 class="anchored" data-anchor-id="random-forest">Random forest</h5>
+<p>As a comparison we set up random forest model to also test the predictive strength. The results were nearly the same. We also tested the results with Variable importance. As previously established Asset and revenue are the strongest predictors. So we reject the Null hypothesis.</p>
+<p><br></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="f1.png" class="img-fluid figure-img" width="700"></p>
+<figcaption>Figure 2.</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="RplotF6.jpeg" class="img-fluid figure-img" width="1200"></p>
+<figcaption>Figure 3. Variable importance plot from the random forest model predicting foundation type.</figcaption>
+</figure>
+</div>
+<p><br></p>
 </section>
-<section id="queation-1" class="level2">
-<h2 class="anchored" data-anchor-id="queation-1">Queation 1</h2>
+</section>
+</section>
+<section id="queation-2" class="level3">
+<h3 class="anchored" data-anchor-id="queation-2">Queation 2</h3>
+<section id="to-what-extent-does-geography-state-level-location-influence-whether-a-nonprofit-is-high-revenue" class="level4">
+<h4 class="anchored" data-anchor-id="to-what-extent-does-geography-state-level-location-influence-whether-a-nonprofit-is-high-revenue">To what extent does geography (state-level location) influence whether a nonprofit is high-revenue?</h4>
+<p>We used a Logistic Regression model with the state as the sole predictor to determine the direct influence of geography on the likelihood of a non-profit being high-revenue. We make a new column HighRevenue as a binary. We changed the reference state to MT as that was calculated to be the most even probability of being either high or low revenue and set up logistic regression. While financial metrics are the primary driver (as shown in Q1), geography does introduce statistically significant. The data suggests non-profits in the New England area (VT, ME, RI) have a clear advantage in terms of this classification compared to the reference state, while certain Mid-Atlantic or Southern states (NJ, SC) are at a slight disadvantage.</p>
+</section>
+</section>
+<section id="queation-3" class="level3">
+<h3 class="anchored" data-anchor-id="queation-3">Queation 3</h3>
 <section id="how-do-key-financial-variables-assets-income-revenue-differ-across-nonprofit-mission-types-and-what-patterns-emerge-from-exploratory-data-analysis" class="level4">
 <h4 class="anchored" data-anchor-id="how-do-key-financial-variables-assets-income-revenue-differ-across-nonprofit-mission-types-and-what-patterns-emerge-from-exploratory-data-analysis">How do key financial variables (assets, income, revenue) differ across nonprofit mission types, and what patterns emerge from exploratory data analysis?</h4>
-<p>To begin the analysis, we used exploratory data analysis (EDA) techniques introduced in STAT 515 to examine how nonprofit financial characteristics vary across National Taxonomy of Exempt Entities (NTEE) mission categories. Because nonprofit financial variables tend to be highly right-skewed, we applied log-scaled violin and boxplot visualizations, which help reveal distributional patterns and reduce the influence of extreme outliers.</p>
 <p>Across the mission types, both asset levels and income levels show substantial variation, with several categories displaying consistently higher medians and wider spreads. For example, groups in categories such as Education (B) and Health (E) tend to have noticeably larger asset bases and higher incomes compared to categories like Arts (A) or Youth (O), which have narrower distributions and lower medians. These patterns suggest that nonprofit sectors differ systematically in operational scale and financial capacity.</p>
 <p>We also examined the Revenue-to-Income ratio, a financial structure metric that indicates how closely an organization’s revenue aligns with reported income. Although most mission categories cluster around similar ratios, the spread within each category is large, reflecting diverse funding models and reporting practices even among similar mission types. Some categories show a heavier tail toward higher ratios, indicating subgroups of organizations with unusually strong revenue performance compared to income.</p>
 <p>Together, these EDA results demonstrate clear financial differences across mission types and provide important context for the modeling conducted in later sections. Understanding these baseline patterns is a key step in exploratory analytics and helps justify the inclusion of financial variables in predictive models used in Research Questions 2–4.</p>
@@ -199,8 +234,8 @@ ul.task-list li input[type="checkbox"] {
 <p><br></p>
 </section>
 </section>
-<section id="queation-2" class="level2">
-<h2 class="anchored" data-anchor-id="queation-2">Queation 2</h2>
+<section id="queation-4" class="level2">
+<h2 class="anchored" data-anchor-id="queation-4">Queation 4</h2>
 <section id="to-what-extent-do-standardized-financial-indicators-predict-whether-an-organization-belongs-to-top-ntee-mission-categories" class="level4">
 <h4 class="anchored" data-anchor-id="to-what-extent-do-standardized-financial-indicators-predict-whether-an-organization-belongs-to-top-ntee-mission-categories">To what extent do standardized financial indicators predict whether an organization belongs to top NTEE mission categories?</h4>
 <p>To evaluate whether financial characteristics are predictive of mission type, we fit binary logistic regression models for five of the most common NTEE major groups (A, B, P, N, X). All financial variables were standardized prior to modeling to improve interpretability and model stability. Odds ratios and 95% confidence intervals were computed for each predictor to assess the direction and magnitude of associations.</p>
@@ -220,70 +255,35 @@ ul.task-list li input[type="checkbox"] {
 <figcaption>Figure 5. Accuracy of logistic regression models for predicting mission type after applying oversampling.</figcaption>
 </figure>
 </div>
-<p><br> ## Queation 3</p>
-</section>
-<section id="which-financial-indicators-most-strongly-predict-an-organizations-foundation-classification-type" class="level4">
-<h4 class="anchored" data-anchor-id="which-financial-indicators-most-strongly-predict-an-organizations-foundation-classification-type">Which financial indicators most strongly predict an organization’s foundation classification type?</h4>
-<p>The multinomial logistic regression model achieved modest predictive accuracy, indicating that although financial measures differ across foundation types, they do not fully explain classification. Coefficients for variables such as Log Revenue Dependence and Log Liquidity were significant for several foundation categories, suggesting that the way organizations generate and use financial resources correlates with foundation type.</p>
-<p>The random forest model performed similarly in overall accuracy but offered deeper insight through variable importance. The model identified revenue, assets, and liquidity as the most influential predictors. This indicates that financial scale and financial structure play meaningful roles in distinguishing different foundation classifications.</p>
-<p>The decision tree provides a simple visual summary of how financial thresholds split organizations into distinct types. Early splits on asset amount and liquidity suggest that foundational categorization often reflects differences in organizational size and financial reserves.</p>
-<p>Overall, the results show that financial characteristics contribute meaningfully to foundation classification, though they are not the sole determinants.</p>
+<p><br></p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="RplotF6.png" class="img-fluid figure-img" width="1200"></p>
+<p><img src="RplotF6.jpeg" class="img-fluid figure-img" width="1200"></p>
 <figcaption>Figure 6. Variable importance plot from the random forest model predicting foundation type.</figcaption>
 </figure>
 </div>
 </section>
+<section id="results-findings" class="level3">
+<h3 class="anchored" data-anchor-id="results-findings">Results &amp; Findings</h3>
 </section>
-<section id="queation-4" class="level2">
-<h2 class="anchored" data-anchor-id="queation-4">Queation 4</h2>
-<section id="which-organizational-characteristics-best-predict-whether-a-nonprofit-earns-high-revenue" class="level4">
-<h4 class="anchored" data-anchor-id="which-organizational-characteristics-best-predict-whether-a-nonprofit-earns-high-revenue">Which organizational characteristics best predict whether a nonprofit earns high revenue?</h4>
-<p>First thing we do is clean the data set and determine which predictors are going to be used. We changed NTEE_code to NTEE_major to make it easier and set up the hypothesis. H₀: Organizational characteristics have no relationship with whether a nonprofit is High-Income. H₁: At least one organizational characteristic is associated with whether a nonprofit is High-Income. The Analysis of Deviance Table shows that ASSET_AMT and REVENUE_AMT are by far the strongest predictors, followed by the organization’s fiscal year-end month (ACCT_PD), NTEE_major, State and Group status. Group status was the only insignificant predictor. we used a generalized linear model with the. To test the accuracy of the model we set up a 80/20 train/test split which had a 0.97 accuracy.</p>
-<p>Analysis of Deviance Table</p>
-<p>Model: binomial, link: logit</p>
-<p>Response: HighIncome</p>
-<p>Terms added sequentially (first to last)</p>
-<pre><code>        Df Deviance Resid. Df Resid. Dev Pr(&gt;Chi)    </code></pre>
-<p>NULL 267169 370300<br>
-NTEE_major 27 9068 267142 361232 &lt;2e-16 <strong><em> GroupStatus 1 2 267141 361231 0.1978<br>
-STATE 49 857 267092 360374 &lt;2e-16 </em></strong> ACCT_PD 1 18175 267091 342199 &lt;2e-16 <strong><em> ASSET_AMT 1 85183 267090 257015 &lt;2e-16 </em></strong> REVENUE_AMT 1 206144 267089 50871 &lt;2e-16 *** — Signif. codes: 0 ‘<em><strong>’ 0.001 ’</strong>’ 0.01 ’</em>’ 0.05 ‘.’ 0.1 ’ ’ 1</p>
-<p>pred Low High High 413 26207 Low 25915 899 [1] 0.9754463 Random forest As a comparison we set up random forest model to also test the predictive strength. The results were nearly the same. We also tested the results with Variable importance. As previously established Asset and revenue are the strongest predictors. So we reject the Null hypothesis.</p>
-<p>pred_rf Low High Low 26294 1019 High 34 26087 [1] 0.9802934 Low High MeanDecreaseAccuracy MeanDecreaseGini NTEE_major 15.792944 7.441951 15.352650 942.06111 GroupStatus 1.583322 11.555183 7.171355 64.50143 STATE 1.714387 7.671794 4.967953 970.27806 ACCT_PD 24.847531 3.598103 18.267817 2788.23862 ASSET_AMT 45.826334 7.146857 39.753056 20270.54802 REVENUE_AMT 409.832341 449.456928 447.314524 79929.70270</p>
-<p>#<img src="RplotF6.jpeg" class="img-fluid" width="1200" alt="Figure 8. Predicted probability of high revenue across foundation types, holding financial ratios constant at their mean values."></p>
-<p><br></p>
-<p>#<img src="RplotF8.jpeg" class="img-fluid" width="1200" alt="Figure 9. ."></p>
-<p><br></p>
-<p>#<img src="Odds Ratios for Financial Predictors Across Top NTEE Groups.jpeg" class="img-fluid" width="1200" alt="Figure 10. State-level odds ratios for high revenue compared to the reference state (IL)."></p>
-<p><br> ## Queation 5</p>
-</section>
-<section id="to-what-extent-does-geography-state-level-location-influence-whether-a-nonprofit-is-high-revenue" class="level4">
-<h4 class="anchored" data-anchor-id="to-what-extent-does-geography-state-level-location-influence-whether-a-nonprofit-is-high-revenue">To what extent does geography (state-level location) influence whether a nonprofit is high-revenue?</h4>
-<p>We used a Logistic Regression model with the state as the sole predictor to determine the direct influence of geography on the likelihood of a non-profit being high-revenue. We make a new column HighRevenue as a binary. We changed the reference state to MT as that was calculated to be the most even probability of being either high or low revenue and set up logistic regression. While financial metrics are the primary driver (as shown in Q1), geography does introduce statistically significant. The data suggests non-profits in the New England area (VT, ME, RI) have a clear advantage in terms of this classification compared to the reference state, while certain Mid-Atlantic or Southern states (NJ, SC) are at a slight disadvantage.</p>
-<p>[1] “MT” (Intercept) STATEAK STATEAL STATEAR STATEAZ STATECA 1.0000000 1.1601831 0.9847654 0.9417773 1.1809278 0.9770317 STATECO STATECT STATEDE STATEFL STATEGA STATEHI 1.1674272 1.1412791 1.1527778 0.9260783 0.9265980 1.1008264 STATEIA STATEID STATEIL STATEIN STATEKS STATEKY 0.9747706 0.8896648 0.9612230 1.0034065 0.9854577 1.0102459 STATELA STATEMA STATEMD STATEME STATEMI STATEMN 1.0071788 0.8937000 1.0523446 1.3746594 1.0469836 1.0531118 STATEMO STATEMS STATENC STATEND STATENE STATENH 1.1114565 0.8766667 1.2274168 1.2345972 1.0729167 0.9372973 STATENJ STATENM STATENV STATENY STATEOH STATEOK 0.6850978 1.1361816 0.8950472 1.0043860 0.9090722 0.9828259 STATEOR STATEPA STATERI STATESC STATESD STATETN 1.0402178 1.1071368 1.2363281 0.8362709 1.0404624 1.0781722 STATETX STATEUT STATEVA STATEVT STATEWA STATEWI 0.9223468 1.1137931 1.0774318 1.5504949 1.0445398 0.9423005 STATEWV STATEWY 1.0443213 1.1717452</p>
-</section>
-</section>
-<section id="results-findings" class="level2">
-<h2 class="anchored" data-anchor-id="results-findings">Results &amp; Findings</h2>
-</section>
-<section id="discussion" class="level2">
-<h2 class="anchored" data-anchor-id="discussion">Discussion</h2>
+<section id="discussion" class="level3">
+<h3 class="anchored" data-anchor-id="discussion">Discussion</h3>
 <p>This study examined whether financial characteristics—assets, income, revenue, and revenue-to-income ratios—help distinguish the largest nonprofit mission groups in the NTEE system. Across the five logistic models, financial indicators showed clear and interpretative differences between sectors. As shown in Table 2 and visualized in Figures 1 and 2, each mission type displays a distinct financial pattern.</p>
 <p>Assets played a central role for several groups. Education and Arts organizations were more likely to have higher asset levels, suggesting reliance on endowments or long-term capital investments. In contrast, Human Services and Youth nonprofits tended to operate with fewer fixed resources, reflecting their focus on direct service delivery and short-term funding cycles.</p>
 <p>Income was especially important for Youth Development and Religion Support organizations. These groups appear to depend more on continuous financial inflows (such as donations or program fees), rather than accumulated assets. Meanwhile, the revenue-to-income ratio strongly distinguished Human Services and Religion Support groups, indicating differences in funding structures or operational efficiency.</p>
 <p>While revenue alone was not a strong predictor for most groups—likely due to its wide skew—its standardized form still helped reveal overall financial tendencies. Together, these results show that nonprofit mission categories align with meaningful financial signatures rather than arbitrary labels.</p>
 </section>
-<section id="conclusion" class="level2">
-<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<section id="conclusion" class="level3">
+<h3 class="anchored" data-anchor-id="conclusion">Conclusion</h3>
 <p>Overall, the findings indicate that nonprofit mission type can be partially explained by basic financial characteristics. Assets, income, and revenue-to-income ratios consistently differentiated the five largest NTEE groups, demonstrating that financial structure varies systematically across sectors. Education and Arts organizations tend to hold more assets, while Youth and Religion Support organizations rely more on income. Human Services groups show distinctive revenue-to-income behavior, highlighting the financial pressures of service-oriented work.</p>
 <p>Although financial data do not capture the full complexity of nonprofit missions, these patterns show that mission type is closely tied to how organizations raise, manage, and rely on financial resources. Future work could expand the analysis by incorporating multi-year financial trends or geographic differences, but the present results already demonstrate that financial indicators offer meaningful insight into the nonprofit landscape.</p>
 </section>
-<section id="future-scope" class="level2">
-<h2 class="anchored" data-anchor-id="future-scope">Future Scope</h2>
+<section id="future-scope" class="level3">
+<h3 class="anchored" data-anchor-id="future-scope">Future Scope</h3>
 <p><br></p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
