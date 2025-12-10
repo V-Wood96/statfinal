@@ -22,7 +22,7 @@ H₀₁:  Organizational characteristics have no relationship with whether a non
 
 H₁₁: At least one organizational characteristic is associated with whether a nonprofit is High-Income. 
 
-The Analysis of Deviance Table shows that ASSET_AMT and REVENUE_AMT are by far the strongest predictors, followed by the organization’s fiscal year-end month (ACCT_PD), NTEE_major, State and Group status. Group status was the only insignificant predictor. we used a generalized linear model with the. To test the accuracy of the model we set up a 80/20 train/test split which had a 0.97 accuracy.
+The Analysis of Deviance Table shows that ASSET_AMT and REVENUE_AMT are by far the strongest predictors, followed by the organization’s fiscal year-end month (ACCT_PD), NTEE_major, State and Group status. Group status was the only insignificant predictor. We used a generalized linear model with the predictors to test the accuracy of the model we set up a 80/20 train/test split which had a 0.97 accuracy.
 
 ![Figure 1.](f2.png){width="700"}
 
