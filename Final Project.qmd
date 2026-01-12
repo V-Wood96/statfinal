@@ -17,43 +17,11 @@ Tax-exempt organizations receive federal tax benefits in exchange for providing 
 To prepare the dataset for analysis, we applied several techniques covered in class. Exploratory data analysis was used to assess skew, missing values, and category imbalance. To create more interpretable predictors, we engineered financial structure ratios including asset to income, revenue dependence, and liquidity. These ratios were then log transformed to reduce skew and stabilize variance. Standardization was applied to continuous predictors before modeling. For classification tasks, we used logistic regression and random forest models, and oversampling techniques were applied to address class imbalance. These steps allowed us to analyze financial determinants of organizational outcomes using consistent and well-structured variables.
 
 ### Question 1
-#### Which organizational characteristics most strongly predict whether a nonprofit is high-Income?
-H₀₁:  Organizational characteristics have no relationship with whether a nonprofit is High-Income. 
 
-H₁₁: At least one organizational characteristic is associated with whether a nonprofit is High-Income. 
-
-The Analysis of Deviance Table shows that ASSET_AMT and REVENUE_AMT are by far the strongest predictors, followed by the organization’s fiscal year-end month (ACCT_PD), NTEE_major, State and Group status. Group status was the only insignificant predictor. We used a generalized linear model with the predictors to test the accuracy of the model we set up a 80/20 train/test split which had a 0.97 accuracy.
-
-![Figure 1.](f2.png){width="700"}
-
-
-##### Random forest
-As a comparison we set up random forest model to also test the predictive strength. The results were nearly the same. We also tested the results with Variable importance. As previously established Asset and revenue are the strongest predictors. So we reject the Null hypothesis.
 
 <br> 
 
-![Figure 2.](f1.png){width="700"}
-
-![Figure 3. Variable importance plot from the random forest model.](rf. variable imporance.png){width="1200"}
-
-<br> 
-
-### Question 2
-#### To what extent does geography (state-level location) influence whether a nonprofit is high-revenue?
-H₀₂: State of registration has no effect on the odds that a nonprofit is high-revenue.
-
-H₁₂: State of registration does affect the odds that a nonprofit is high-revenue.
-
-We used a Logistic Regression model with the state as the sole predictor to determine the direct influence of geography on the likelihood of a non-profit being high-revenue. We make a new column High Revenue as a binary. We changed the reference state to MT as that was calculated to be the most even probability of being either high or low revenue and set up logistic regression. While financial metrics are the primary driver (as shown in Q1), geography does introduce statistically significant. The data suggests non-profits in the New England area (VT, ME, RI) have a clear advantage in terms of this classification compared to the reference state, while certain Mid-Atlantic or Southern states (NJ, SC) are at a slight disadvantage.
-
-![Figure 4.](Q2.png){width="1200"}
-
-
-### Question 3
 #### To what extent do standardized financial indicators predict whether an organization belongs to top NTEE mission categories?
-H₀₃: Financial characteristics do not differ across NTEE major mission categories.
-
-H₁₃: At least one financial characteristic differs across NTEE major mission categories.
 
 Exploratory analysis shows substantial variation in asset and income levels across mission types. For example, organizations in Education and Health tend to have higher median assets and income, while organizations in categories such as Arts or Youth display narrower distributions and smaller financial footprints. These patterns indicate that nonprofit sectors vary systematically in operational scale.
 
@@ -88,7 +56,7 @@ To further examine these relationships, logistic models were fit for the five la
 
 ![Figure 12. Odds Ratios and 95% Confidence Intervals Across NTEE Groups.](ntee_results_table.png){width="1200"}
 
-## Question 4
+### Question 2
 #### To what extent do financial indicators predict foundation classification type?
 H₀₄: Financial indicators (assets, income, liquidity, revenue dependence, revenue-to-income ratio) do not predict foundation type.
 

@@ -5,16 +5,9 @@ about:
   template: marquee
 ---
 
-### About Us 
+### About me
 
-Welcome and thanks for taking the time to check out our Applied Statistics and Visualization for Analytics final project. During this project, we investigate financial predictors of U.S. tax-exempt organizations. Below is some additional information about the two members of Group Two. We hope you enjoy reading!
-
-
-### Anand Boldbaatar
-
-![Anand Boldbaatar](Profile.png){width=400}
-
-I am Anand Boldbaatar a masters student at George Mason university, majoring In Applied data analytics. My undergrad was in IT (Database and programming)
+Welcome and thanks for taking the time to check out my Applied Statistics and Visualization for Analytics final project. During this project, we investigate financial predictors of U.S. tax-exempt organizations. Below is some additional information about myself.
 
 ### Veronica Wood
 
